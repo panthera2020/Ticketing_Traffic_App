@@ -11,6 +11,10 @@ public class DriverRepositoryImpl implements DriverRepository {
 
     @Override
     public Driver save(Driver driver) {
+        if (existById(driver.getId())) {
+            update(driver);
+            return driver;
+        }
         driver.setId(++numberOfDrivers);
         drivers.add(driver);
         return driver;
@@ -18,7 +22,7 @@ public class DriverRepositoryImpl implements DriverRepository {
 
     @Override
     public long count() {
-        return numberOfDrivers;
+        return drivers.size();
     }
 
     @Override
@@ -31,9 +35,18 @@ public class DriverRepositoryImpl implements DriverRepository {
         throw new IllegalArgumentException("Driver with id " + id + " not found");
     }
 
+    private void update(Driver driver) {
+        for (int index = 0; index < drivers.size(); index++) {
+            if (drivers.get(index).getId() == driver.getId()) {
+                drivers.set(index, driver);
+                break;
+            }
+        }
+    }
+
     @Override
     public List<Driver> findAll() {
-        if(numberOfDrivers == 0) throw new IllegalArgumentException("No Drivers saved");
+        if(count() == 0) throw new IllegalArgumentException("No Drivers saved");
         return drivers;
     }
 
@@ -41,7 +54,7 @@ public class DriverRepositoryImpl implements DriverRepository {
     public void delete(int id) {
         Driver foundDriver = findById(id);
         drivers.remove(foundDriver);
-        numberOfDrivers--;
+//        numberOfDrivers--;
     }
 
     @Override
