@@ -1,6 +1,15 @@
 package com.lastma.data.models;
 
 public class Officer {
+    private String fullName;
+    private String officerNumber;
+    private int id;
+    private boolean isActive;
+
+    public boolean isActive() {return isActive;}
+
+    public void setActive(boolean state) {isActive = state;}
+
     public String getFullName() {
         return fullName;
     }
@@ -9,12 +18,12 @@ public class Officer {
         this.fullName = fullName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getOfficerNumber() {
+        return officerNumber;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setOfficerNumber(String officerNumber) {
+        this.officerNumber = officerNumber;
     }
 
     public int getId() {
@@ -25,8 +34,6 @@ public class Officer {
         this.id = id;
     }
 
-    private String fullName;
-    private String email;
-    private int id;
+
 
 }

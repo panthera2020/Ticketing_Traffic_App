@@ -65,9 +65,7 @@ public class OfficerRepositoryImpl implements OfficerRepository {
     @Override
     public boolean existById(int id) {
         for (Officer officer : officers) {
-            if (officer.getId() == id) {
-                return true;
-            }
+            if (officer.getId() == id) return true;
         }
         return false;
     }

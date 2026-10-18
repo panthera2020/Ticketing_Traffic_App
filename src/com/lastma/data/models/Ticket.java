@@ -4,14 +4,16 @@ import java.util.Date;
 
 public class Ticket {
     private int id;
+    private ViolationType type;
+    private int violationFee;
+    private Date issuedDate;
+    private Date dueDate;
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) {this.id = id;}
 
     public ViolationType getType() {
         return type;
@@ -45,8 +47,5 @@ public class Ticket {
         this.dueDate = dueDate;
     }
 
-    private ViolationType type;
-    private int violationFee;
-    private Date issuedDate;
-    private Date dueDate;
+
 }

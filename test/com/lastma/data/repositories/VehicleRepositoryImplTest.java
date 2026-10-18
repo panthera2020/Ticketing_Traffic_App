@@ -58,11 +58,11 @@ class VehicleRepositoryImplTest {
     public void testThatWhenISaveVehicle_AndISaveSameVehicle_VehicleIsUpdated() {
         Vehicle newVehicle = vehicleRepository.save(vehicle);
         Vehicle sameVehicle = vehicleRepository.findById(newVehicle.getId());
-        sameVehicle.setBrand("Toyota");
+        sameVehicle.setMake("Toyota");
         vehicleRepository.save(sameVehicle);
 
         assertEquals(1, vehicleRepository.count());
-        assertEquals("Toyota", vehicleRepository.findById(newVehicle.getId()).getBrand());
+        assertEquals("Toyota", vehicleRepository.findById(newVehicle.getId()).getMake());
     }
 
     @Test
@@ -80,29 +80,29 @@ class VehicleRepositoryImplTest {
 
         Vehicle replacement = new Vehicle();
         replacement.setId(savedVehicle.getId());
-        replacement.setBrand("Toyota");
+        replacement.setMake("Toyota");
         vehicleRepository.save(replacement);
 
         assertEquals(1L, vehicleRepository.count());
         assertSame(replacement, vehicleRepository.findById(savedVehicle.getId()));
-        assertEquals("Toyota", vehicleRepository.findById(savedVehicle.getId()).getBrand());
+        assertEquals("Toyota", vehicleRepository.findById(savedVehicle.getId()).getMake());
     }
 
     @Test
     public void testThatWhenIUpdateSecondVehicle_FirstVehicleIsNotAffected() {
         Vehicle vehicleTwo = new Vehicle();
-        vehicle.setBrand("Honda");
+        vehicle.setMake("Honda");
         vehicleRepository.save(vehicle);
         vehicleRepository.save(vehicleTwo);
 
         Vehicle replacement = new Vehicle();
         replacement.setId(vehicleTwo.getId());
-        replacement.setBrand("Toyota");
+        replacement.setMake("Toyota");
         vehicleRepository.save(replacement);
 
         assertEquals(2L, vehicleRepository.count());
-        assertEquals("Honda", vehicleRepository.findById(vehicle.getId()).getBrand());
-        assertEquals("Toyota", vehicleRepository.findById(vehicleTwo.getId()).getBrand());
+        assertEquals("Honda", vehicleRepository.findById(vehicle.getId()).getMake());
+        assertEquals("Toyota", vehicleRepository.findById(vehicleTwo.getId()).getMake());
     }
 
     @Test

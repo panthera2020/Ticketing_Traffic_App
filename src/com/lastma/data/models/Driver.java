@@ -4,7 +4,7 @@ public class Driver {
     private String fullName;
     private String email;
     private int id;
-    private String carPlateNumber;
+    private String phoneNumber;
 
     public String getFullName() {
         return fullName;
@@ -30,13 +30,11 @@ public class Driver {
         this.id = id;
     }
 
-    public String getCarPlateNumber() {
-        return carPlateNumber;
+    public String getCarPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setCarPlateNumber(String carPlateNumber) {
-        this.carPlateNumber = carPlateNumber;
+    public void setCarPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
-
-
 }

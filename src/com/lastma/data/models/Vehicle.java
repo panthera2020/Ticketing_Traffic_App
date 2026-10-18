@@ -4,7 +4,7 @@ import java.time.Year;
 
 public class Vehicle {
     private int id;
-    private String brand;
+    private String make;
     private String model;
     private Year year;
     private VehicleType Type;
@@ -27,12 +27,12 @@ public class Vehicle {
         PlateNumber = plateNumber;
     }
 
-    public String getBrand() {
-        return brand;
+    public String getMake() {
+        return make;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setMake(String make) {
+        this.make = make;
     }
 
     public String getModel() {
