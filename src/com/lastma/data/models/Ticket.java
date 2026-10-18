@@ -1,13 +1,66 @@
 package com.lastma.data.models;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class Ticket {
     private int id;
-    private ViolationType type;
-    private int violationFee;
-    private Date issuedDate;
-    private Date dueDate;
+    private int offenceId;
+    private int vehicleId;
+    private int issuedByOfficerId;
+    private String ticketNumber;
+    private String Location;
+    private String description;
+    private String status;
+    private BigDecimal violationFee;
+    private LocalDate issuedDate;
+    private LocalDate dueDate;
+
+    public String getTicketNumber() {
+        return ticketNumber;
+    }
+
+    public void setTicketNumber(String ticketNumber) {
+        this.ticketNumber = ticketNumber;
+    }
+
+    public String getLocation() {
+        return Location;
+    }
+
+    public void setLocation(String location) {
+        Location = location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
+
+    public int getVehicleId() {return vehicleId;}
+
+    public void setVehicleId(int vehicleId) {this.vehicleId = vehicleId;}
+
+    public int getIssuedByOfficerId() { return issuedByOfficerId;}
+
+    public void setIssuedByOfficerId(int issuedByOfficerId) {this.issuedByOfficerId = issuedByOfficerId;}
+
+    public int getOffenceId() {return offenceId;}
+
+    public void setOffenceId(int offenceId) { this.offenceId = offenceId;}
 
     public int getId() {
         return id;
@@ -15,35 +68,27 @@ public class Ticket {
 
     public void setId(int id) {this.id = id;}
 
-    public ViolationType getType() {
-        return type;
-    }
-
-    public void setType(ViolationType type) {
-        this.type = type;
-    }
-
-    public int getViolationFee() {
+    public BigDecimal getViolationFee() {
         return violationFee;
     }
 
-    public void setViolationFee(int violationFee) {
+    public void setViolationFee(BigDecimal violationFee) {
         this.violationFee = violationFee;
     }
 
-    public Date getIssuedDate() {
+    public LocalDate getIssuedDate() {
         return issuedDate;
     }
 
-    public void setIssuedDate(Date issuedDate) {
+    public void setIssuedDate(LocalDate issuedDate) {
         this.issuedDate = issuedDate;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 

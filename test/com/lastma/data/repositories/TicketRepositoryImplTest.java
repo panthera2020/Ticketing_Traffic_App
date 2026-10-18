@@ -4,6 +4,7 @@ import com.lastma.data.models.Ticket;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -59,11 +60,11 @@ class TicketRepositoryImplTest {
     public void testThatWhenISaveTicket_AndISaveSameTicket_TicketIsUpdated() {
         Ticket newTicket = ticketRepository.save(ticket);
         Ticket sameTicket = ticketRepository.findById(newTicket.getId());
-        sameTicket.setViolationFee(5000);
+        sameTicket.setViolationFee(BigDecimal.valueOf(5000));
         ticketRepository.save(sameTicket);
 
         assertEquals(1, ticketRepository.count());
-        assertEquals(5000, ticketRepository.findById(newTicket.getId()).getViolationFee());
+        assertEquals(BigDecimal.valueOf(5000), ticketRepository.findById(newTicket.getId()).getViolationFee());
     }
 
     @Test
@@ -81,29 +82,29 @@ class TicketRepositoryImplTest {
 
         Ticket replacement = new Ticket();
         replacement.setId(savedTicket.getId());
-        replacement.setViolationFee(5000);
+        replacement.setViolationFee(BigDecimal.valueOf(5000));
         ticketRepository.save(replacement);
 
         assertEquals(1L, ticketRepository.count());
         assertSame(replacement, ticketRepository.findById(savedTicket.getId()));
-        assertEquals(5000, ticketRepository.findById(savedTicket.getId()).getViolationFee());
+        assertEquals(BigDecimal.valueOf(5000), ticketRepository.findById(savedTicket.getId()).getViolationFee());
     }
 
     @Test
     public void testThatWhenIUpdateSecondTicket_FirstTicketIsNotAffected() {
         Ticket ticketTwo = new Ticket();
-        ticket.setViolationFee(2000);
+        ticket.setViolationFee(BigDecimal.valueOf(2000));
         ticketRepository.save(ticket);
         ticketRepository.save(ticketTwo);
 
         Ticket replacement = new Ticket();
         replacement.setId(ticketTwo.getId());
-        replacement.setViolationFee(7000);
+        replacement.setViolationFee(BigDecimal.valueOf(7000));
         ticketRepository.save(replacement);
 
         assertEquals(2L, ticketRepository.count());
-        assertEquals(2000, ticketRepository.findById(ticket.getId()).getViolationFee());
-        assertEquals(7000, ticketRepository.findById(ticketTwo.getId()).getViolationFee());
+        assertEquals(BigDecimal.valueOf(2000), ticketRepository.findById(ticket.getId()).getViolationFee());
+        assertEquals(BigDecimal.valueOf(7000), ticketRepository.findById(ticketTwo.getId()).getViolationFee());
     }
 
     @Test
