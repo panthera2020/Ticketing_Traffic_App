@@ -64,8 +64,12 @@ public class Offence {
         return active;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void activate() {
+        this.active = true;
+    }
+
+    public void deactivate() {
+        this.active = false;
     }
 
 

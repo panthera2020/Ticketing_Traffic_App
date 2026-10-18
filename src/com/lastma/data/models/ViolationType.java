@@ -1,9 +1,5 @@
 package com.lastma.data.models;
 
-/**
- * Traffic offences with their fines, points and extra penalties.
- * Fine amounts are in naira. A null value means "not stated" in the source table.
- */
 public enum ViolationType {
 
     TRAFFIC_CONTROL_VIOLATION(
@@ -63,25 +59,25 @@ public enum ViolationType {
     DRIVING_ON_WALKWAY_KERBS(
             "Driving on Walkway/Kerbs",
             "Driving on walkway or kerbs",
-            4, 50_000, null,
+            4, 50_000, 0,
             "Vehicle impoundment + 3 months imprisonment"),
 
     PARKING_ON_WALKWAY_KERBS(
             "Parking on Walkway/Kerbs",
             "Parking on walkway or kerbs",
-            3, 20_000, null,
+            3, 20_000, 0,
             "Vehicle impoundment + 3 months imprisonment"),
 
     ABANDONED_VEHICLE_ON_HIGHWAY(
             "Abandoned Vehicle on Highway",
             "Abandoned vehicle on highway",
-            2, 50_000, null,
+            2, 50_000, 0,
             "Towing fee applies + 3 months imprisonment"),
 
     BREAKDOWN_HIGHWAY_OBSTRUCTION(
             "Highway Obstruction",
             "Causing obstruction on highway if broken down",
-            3, 25_000, null,
+            3, 25_000, 0,
             "Towing fee applies"),
 
     USE_OF_PHONE_CALL(
