@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChallengeRepositoryImpl implements ChallengeRepository {
-    private List<Challenge> challenges = new ArrayList<>();
+    private static List<Challenge> challenges = new ArrayList<>();
     private int numberOfChallenges = 0;
 
     @Override

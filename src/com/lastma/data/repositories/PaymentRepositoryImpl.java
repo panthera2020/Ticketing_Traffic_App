@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentRepositoryImpl implements PaymentRepository {
-    private List<Payment> payments = new ArrayList<>();
+    private static List<Payment> payments = new ArrayList<>();
     private int numberOfPayments = 0;
 
     @Override

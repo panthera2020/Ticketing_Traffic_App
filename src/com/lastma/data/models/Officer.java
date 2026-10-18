@@ -6,9 +6,11 @@ public class Officer {
     private int id;
     private boolean isActive;
 
-    public boolean isActive() {return isActive;}
+    public boolean isActive() {
+        return isActive;}
 
-    public void setActive(boolean state) {isActive = state;}
+    public void activate() {isActive = true;}
+    public void deactivate() {isActive = false;}
 
     public String getFullName() {
         return fullName;

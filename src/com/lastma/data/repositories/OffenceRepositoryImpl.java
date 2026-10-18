@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OffenceRepositoryImpl implements OffenceRepository {
-    private List<Offence> offences = new ArrayList<>();
+    private static List<Offence> offences = new ArrayList<>();
     private int numberOfOffences = 0;
 
     @Override

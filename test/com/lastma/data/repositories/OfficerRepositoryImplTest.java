@@ -17,6 +17,7 @@ public class OfficerRepositoryImplTest {
     public void setUp() {
         officerRepository = new OfficerRepositoryImpl();
         officer = new Officer();
+        officerRepository.deleteAll();
     }
 
     @Test

@@ -16,6 +16,7 @@ class ChallengeRepositoryImplTest {
     public void setUp() {
         challengeRepository = new ChallengeRepositoryImpl();
         challenge = new Challenge();
+        challengeRepository.deleteAll();
     }
 
     @Test

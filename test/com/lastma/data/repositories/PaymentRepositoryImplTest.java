@@ -16,6 +16,7 @@ class PaymentRepositoryImplTest {
     public void setUp() {
         paymentRepository = new PaymentRepositoryImpl();
         payment = new Payment();
+        paymentRepository.deleteAll();
     }
 
     @Test

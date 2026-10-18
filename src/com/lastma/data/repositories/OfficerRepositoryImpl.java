@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OfficerRepositoryImpl implements OfficerRepository {
-    private final List<Officer> officers = new ArrayList<>();
+    private static List<Officer> officers = new ArrayList<>();
     private int nextId = 0;
 
     @Override

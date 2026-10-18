@@ -16,6 +16,7 @@ class OffenceRepositoryImplTest {
     public void setUp() {
         offenceRepository = new OffenceRepositoryImpl();
         offence = new Offence();
+        offenceRepository.deleteAll();
     }
 
     @Test

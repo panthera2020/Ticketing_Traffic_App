@@ -16,6 +16,7 @@ class TicketRepositoryImplTest {
     public void setUp() {
         ticketRepository = new TicketRepositoryImpl();
         ticket = new Ticket();
+        ticketRepository.deleteAll();
     }
 
     @Test

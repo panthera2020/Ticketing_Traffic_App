@@ -16,6 +16,7 @@ class VehicleRepositoryImplTest {
     public void setUp() {
         vehicleRepository = new VehicleRepositoryImpl();
         vehicle = new Vehicle();
+        vehicleRepository.deleteAll();
     }
 
     @Test

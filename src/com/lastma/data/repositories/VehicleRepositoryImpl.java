@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleRepositoryImpl implements VehicleRepository {
-    private final List<Vehicle> vehicles = new ArrayList<>();
+    private static List<Vehicle> vehicles = new ArrayList<>();
     private int nextId = 0;
 
     @Override

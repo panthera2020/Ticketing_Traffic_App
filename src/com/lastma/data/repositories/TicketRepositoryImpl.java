@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicketRepositoryImpl implements TicketRepository {
-    private final List<Ticket> tickets = new ArrayList<>();
+    private static List<Ticket> tickets = new ArrayList<>();
     private int nextId = 0;
 
     @Override

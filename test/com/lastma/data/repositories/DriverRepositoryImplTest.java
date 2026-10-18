@@ -16,6 +16,7 @@ class DriverRepositoryImplTest {
     public void setUp() {
         driverRepository = new DriverRepositoryImpl();
         driver = new Driver();
+        driverRepository.deleteAll();
     }
 
     @Test
@@ -336,66 +337,5 @@ class DriverRepositoryImplTest {
 
         assertEquals(1L, driverRepository.count());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    @Test
-//    public void testThatWhenIFindById_DriverIsFound() {
-//        Driver savedDriver = driverRepository.save(driver);
-//        int driverId = savedDriver.getId();
-//        assertEquals(driver,driverRepository.findById(driverId));
-//    }
-//
-//    @Test
-//    public void testThatWhenIFindByIncorrectId_ErrorIsThrown() {
-//        assertThrows(IllegalArgumentException.class, () -> driverRepository.findById(-1));
-//    }
-//
-//    @Test
-//    public void testThatWhenIFindAll_AllDriversAreReturned() {
-//        Driver driverTwo = new Driver();
-//        Driver driverThree = new Driver();
-//        Driver [] drivers = {driver,driverTwo,driverThree};
-//        for(Driver driver:drivers){
-//            driverRepository.save(driver);
-//        }
-//        int count = 0;
-//        List<Driver> foundDrivers = driverRepository.findAll();
-//        for(Driver driver:foundDrivers){
-//            assertEquals(driver,drivers[count]);
-//            count++;
-//        }
-//
-//    }
 
 }
