@@ -8,7 +8,17 @@ public class Vehicle {
     private String model;
     private Year year;
     private VehicleType Type;
-    private String PlateNumber;
+    private int driverId;
+    private String plateNumber;
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
+    }
+
 
     public int getId() {
         return id;
@@ -19,12 +29,12 @@ public class Vehicle {
     }
 
 
-    public String getPlateNumber() {
-        return PlateNumber;
+    public int getDriverId() {
+        return driverId;
     }
 
-    public void setPlateNumber(String plateNumber) {
-        PlateNumber = plateNumber;
+    public void setDriverId(int driverId) {
+        this.driverId = driverId;
     }
 
     public String getMake() {

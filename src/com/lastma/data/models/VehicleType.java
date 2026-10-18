@@ -9,4 +9,5 @@ public enum VehicleType {
     BUS,
     TRUCK,
     KEKE,
+    SUV,
 }
