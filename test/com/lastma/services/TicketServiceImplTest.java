@@ -29,7 +29,7 @@ public class TicketServiceImplTest {
         int driverId = driverService.register("Full Name", "email@example.com","PhoneNumber","Password").getId();
         int offenceId = offenceService.createOffenceWith(ViolationType.BRT_LANE_VIOLATION,"001").getId();
         int officerId = officerService.registerOfficer("Full Name","001","Passw0rd").getId();
-        int vehicleId = vehicleService.register("Toyota","Camry","2025", VehicleType.CAR,driverId,"Plate Number");
+        int vehicleId = vehicleService.register("Toyota","Camry","2025", VehicleType.CAR,driverId,"Plate Number").getId();
         ticketService.issueTicket("Ticket Number", vehicleId,offenceId,officerId,"Location", OffenderStatus.FIRST_TIME_OFFENDER);
         assertEquals(1, ticketRepository.count());
     }
