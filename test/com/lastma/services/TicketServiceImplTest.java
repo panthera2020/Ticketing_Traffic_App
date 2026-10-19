@@ -48,6 +48,4 @@ public class TicketServiceImplTest {
     public void testThatWhen_iIssueTicketWithInvalidOffenceId_errorIsThrown(){
         assertThrows(IllegalArgumentException.class, () -> ticketService.issueTicket("Ticket Number", -2,-5,-3,"Location", OffenderStatus.FIRST_TIME_OFFENDER));
     }
-
-
 }
