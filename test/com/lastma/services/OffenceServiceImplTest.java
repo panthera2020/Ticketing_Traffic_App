@@ -4,6 +4,7 @@ import com.lastma.data.models.Offence;
 import com.lastma.data.models.ViolationType;
 import com.lastma.data.repositories.OffenceRepository;
 import com.lastma.data.repositories.OffenceRepositoryImpl;
+import com.lastma.dtos.responses.OffenceServiceResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,7 @@ public class OffenceServiceImplTest {
     public void setup() {
         offenceService = new OffenceServiceImpl();
         offenceRepository.deleteAll();
-        offenceId = offenceService.createOffenceWith(ViolationType.BRT_LANE_VIOLATION, "004");
+        offenceId = offenceService.createOffenceWith(ViolationType.BRT_LANE_VIOLATION, "004").getId();
     }
 
     @Test
@@ -34,7 +35,7 @@ public class OffenceServiceImplTest {
     @Test
     public void testThatWhenICreateOffenceIdIsGenerated() {
         offenceRepository.deleteAll();
-        assertNotEquals(0, offenceService.createOffenceWith(ViolationType.BRT_LANE_VIOLATION, "004"));
+        assertNotEquals(0, offenceService.createOffenceWith(ViolationType.BRT_LANE_VIOLATION, "004").getId());
     }
 
     @Test
@@ -46,9 +47,9 @@ public class OffenceServiceImplTest {
 
     @Test
     public void testThatOffenceCanBeFoundById(){
-        Offence savedOffenceByService = offenceService.findBy(offenceId);
+        OffenceServiceResponse savedOffenceByService = offenceService.findBy(offenceId);
         Offence savedOffenceByRepo = offenceRepository.findById(offenceId);
-        assertEquals(savedOffenceByService, savedOffenceByRepo);
+        assertEquals(savedOffenceByService.getId(), savedOffenceByRepo.getId());
     }
 
     @Test
@@ -58,9 +59,10 @@ public class OffenceServiceImplTest {
 
     @Test
     public void testThatOffenceCanBeFoundByCode(){
-        Offence savedOffenceByService = offenceService.findBy(offenceId);
-        Offence savedOffenceByRepo = offenceService.findBy("004");
-        assertEquals(savedOffenceByService, savedOffenceByRepo);
+        OffenceServiceResponse foundById = offenceService.findBy(offenceId);
+        OffenceServiceResponse foundByCode = offenceService.findBy("004");
+        assertEquals(foundById.getId(), foundByCode.getId());
+        assertEquals(foundById.getCode(), foundByCode.getCode());
     }
 
     @Test
@@ -70,26 +72,26 @@ public class OffenceServiceImplTest {
 
     @Test
     public void testThatWhenICreateOffence_offenceStatusIsActivated(){
-        Offence savedOffence = offenceService.findBy(offenceId);
+        OffenceServiceResponse savedOffence = offenceService.findBy(offenceId);
         assertTrue(savedOffence.isActive());
     }
 
     @Test
     public void testThatWhenOffenceIsAddedOffenceCanBeDeactivatedWithId(){
-        Offence savedOffence = offenceService.findBy(offenceId);
+        assertTrue(offenceService.findBy(offenceId).isActive());
         offenceService.deactivate(offenceId);
-        assertFalse(savedOffence.isActive());
+        assertFalse(offenceService.findBy(offenceId).isActive());
     }
 
     @Test
     public void testThatICanGetListOfAllCreatedOffences(){
-        int offenceIdOne = offenceService.createOffenceWith(ViolationType.LINE_VIOLATION, "002");
-        int offenceIdTwo = offenceService.createOffenceWith(ViolationType.ROUNDABOUT_VIOLATION, "005");
-        int offenceIdThree = offenceService.createOffenceWith(ViolationType.SEATBELT_VIOLATION, "003");
+        int offenceIdOne = offenceService.createOffenceWith(ViolationType.LINE_VIOLATION, "002").getId();
+        int offenceIdTwo = offenceService.createOffenceWith(ViolationType.ROUNDABOUT_VIOLATION, "005").getId();
+        int offenceIdThree = offenceService.createOffenceWith(ViolationType.SEATBELT_VIOLATION, "003").getId();
         int[] offences = {offenceId, offenceIdOne, offenceIdTwo, offenceIdThree};
-        List<Offence> allOffences = offenceService.findAllOffences();
+        List<OffenceServiceResponse> allOffences = offenceService.findAllOffences();
         int count = 0;
-        for (Offence offence : allOffences) {
+        for (OffenceServiceResponse offence : allOffences) {
             assertEquals(offence.getId(), offences[count]);
             count++;
         }

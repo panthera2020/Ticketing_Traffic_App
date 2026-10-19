@@ -3,6 +3,7 @@ package com.lastma.services;
 import com.lastma.data.models.Officer;
 import com.lastma.data.repositories.OfficerRepository;
 import com.lastma.data.repositories.OfficerRepositoryImpl;
+import com.lastma.dtos.responses.OfficerServiceResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,16 +33,16 @@ class OfficerServiceImplTest {
 
     @Test
     public void testThatWhenIRegisterOfficer_iCanFindOfficerById(){
-        int officerId = officerService.registerOfficer("Fullname","officerNumber","password");
+        int officerId = officerService.registerOfficer("Fullname","officerNumber","password").getId();
         Officer savedOfficerInRepo = officerRepository.findById(officerId);
-        Officer savedOfficerByService = officerService.findOfficer(officerId);
-        assertEquals(savedOfficerInRepo,savedOfficerByService);
+        OfficerServiceResponse savedOfficerByService = officerService.findOfficer(officerId);
+        assertEquals(savedOfficerInRepo.getId(),savedOfficerByService.getId());
     }
 
     @Test
     public void testThatWhenIRegisterOfficer_officerIsActive(){
-        int officerId = officerService.registerOfficer("Fullname", "officerNumber", "password");
-        Officer savedOfficer = officerService.findOfficer(officerId);
+        int officerId = officerService.registerOfficer("Fullname", "officerNumber", "password").getId();
+        OfficerServiceResponse savedOfficer = officerService.findOfficer(officerId);
         assertTrue(savedOfficer.isActive());
     }
 
@@ -55,14 +56,14 @@ class OfficerServiceImplTest {
         officerService.registerOfficer("Fullname","officerNumber","password");
         officerService.registerOfficer("Fullname1","officerNumber1","password1");
         officerService.registerOfficer("Fullname2","officerNumber2","password2");
-        assertEquals(officerRepository.findAll(),officerService.findAllOfficers());
+        assertEquals(officerRepository.findAll().size(),officerService.findAllOfficers().size());
     }
 
     @Test
     public void testThatWhenOfficerIsRegisteredOfficerCanBeDeactivated(){
-        int officerId = officerService.registerOfficer("Fullname", "officerNumber", "password");
+        int officerId = officerService.registerOfficer("Fullname", "officerNumber", "password").getId();
         officerService.deactivate(officerId);
-        Officer savedOfficer = officerService.findOfficer(officerId);
+        OfficerServiceResponse savedOfficer = officerService.findOfficer(officerId);
         assertFalse(savedOfficer.isActive());
     }
 

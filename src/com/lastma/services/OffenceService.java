@@ -2,17 +2,18 @@ package com.lastma.services;
 
 import com.lastma.data.models.Offence;
 import com.lastma.data.models.ViolationType;
+import com.lastma.dtos.responses.OffenceServiceResponse;
 
 import java.util.List;
 
 public interface OffenceService {
-    int createOffenceWith(ViolationType violationType, String code);
+    OffenceServiceResponse createOffenceWith(ViolationType violationType, String code);
 
-    Offence findBy(int offenceId);
+    OffenceServiceResponse findBy(int offenceId);
 
-    Offence findBy(String code);
+    OffenceServiceResponse findBy(String code);
 
     void deactivate(int offenceId);
 
-    List<Offence> findAllOffences();
+    List<OffenceServiceResponse> findAllOffences();
 }
