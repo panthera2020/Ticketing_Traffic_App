@@ -22,7 +22,7 @@ class VehicleServiceImplTest {
         vehicleService = new VehicleServiceImpl();
         driverService = new DriverServiceImpl();
         vehicleRepository.deleteAll();
-        driverId = driverService.register("Fullname","email@example.com","phoneNumber","Password");
+        driverId = driverService.register("Fullname","email@example.com","phoneNumber","Password").getId();
     }
 
     @Test

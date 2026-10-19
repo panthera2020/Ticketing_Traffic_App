@@ -5,6 +5,11 @@ public class Driver {
     private String email;
     private int id;
     private String phoneNumber;
+    private String password;
+
+    public String getPassword() {return password;}
+
+    public void setPassword(String password) {this.password = password;}
 
     public String getFullName() {
         return fullName;
@@ -30,9 +35,7 @@ public class Driver {
         this.id = id;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+    public String getPhoneNumber() {return phoneNumber;}
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;

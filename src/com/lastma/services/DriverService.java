@@ -1,13 +1,14 @@
 package com.lastma.services;
 
 import com.lastma.data.models.Driver;
+import com.lastma.dtos.responses.DriverServiceResponse;
 
 import java.util.List;
 
 public interface DriverService {
-    int register(String fullName, String mail, String phoneNumber, String password);
+    DriverServiceResponse register(String fullName, String mail, String phoneNumber, String password);
 
-    Driver findDriverBy(int driverId);
+    DriverServiceResponse findDriverBy(int driverId);
 
-    List<Driver> findAllDriver();
+    List<DriverServiceResponse> findAllDriver();
 }

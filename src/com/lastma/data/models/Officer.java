@@ -5,11 +5,16 @@ public class Officer {
     private String officerNumber;
     private int id;
     private boolean isActive;
+    private String password;
 
-    public boolean isActive() {
-        return isActive;}
+    public String getPassword() {return password;}
+
+    public void setPassword(String password) {this.password = password;}
+
+    public boolean isActive() {return isActive;}
 
     public void activate() {isActive = true;}
+
     public void deactivate() {isActive = false;}
 
     public String getFullName() {

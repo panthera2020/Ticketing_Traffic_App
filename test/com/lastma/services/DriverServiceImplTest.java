@@ -3,6 +3,7 @@ package com.lastma.services;
 import com.lastma.data.models.Driver;
 import com.lastma.data.repositories.DriverRepository;
 import com.lastma.data.repositories.DriverRepositoryImpl;
+import com.lastma.dtos.responses.DriverServiceResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,10 +33,10 @@ class DriverServiceImplTest {
 
     @Test
     public void testThatWhenDriverIsRegistered_iCanFindDriverById(){
-        int driverId = driverService.register("Full Name","email@example.com", "PhoneNumber", "Password");
+        int driverId = driverService.register("Full Name","email@example.com", "PhoneNumber", "Password").getId();
         Driver savedDriverInRepo = driverRepository.findById(driverId);
-        Driver savedDriverByService = driverService.findDriverBy(driverId);
-        assertEquals(savedDriverInRepo,savedDriverByService);
+        DriverServiceResponse savedDriverByService = driverService.findDriverBy(driverId);
+        assertEquals(savedDriverInRepo.getId(),savedDriverByService.getId());
     }
 
     @Test
@@ -48,7 +49,7 @@ class DriverServiceImplTest {
         driverService.register("Full Name","email@example.com", "PhoneNumber", "Password");
         driverService.register("Full Name1","email@example.com1", "PhoneNumber1", "Password1");
         driverService.register("Full Name2","email@example.com2", "PhoneNumber2", "Password2");
-        assertEquals(driverRepository.findAll(),driverService.findAllDriver());
+        assertEquals(driverRepository.findAll().size(),driverService.findAllDriver().size());
     }
 
 }

@@ -26,7 +26,7 @@ public class TicketServiceImplTest {
     @Test
     public void testThatThatWhenIssueTicket_countIsOne(){
         assertEquals(0, ticketRepository.count());
-        int driverId = driverService.register("Full Name", "email@example.com","PhoneNumber","Password");
+        int driverId = driverService.register("Full Name", "email@example.com","PhoneNumber","Password").getId();
         int offenceId = offenceService.createOffenceWith(ViolationType.BRT_LANE_VIOLATION,"001");
         int officerId = officerService.registerOfficer("Full Name","001","Passw0rd");
         int vehicleId = vehicleService.register("Toyota","Camry","2025", VehicleType.CAR,driverId,"Plate Number");
