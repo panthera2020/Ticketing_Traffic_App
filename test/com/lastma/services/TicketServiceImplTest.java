@@ -4,6 +4,8 @@ import com.lastma.data.models.OffenderStatus;
 import com.lastma.data.models.VehicleType;
 import com.lastma.data.models.ViolationType;
 import com.lastma.data.repositories.*;
+import com.lastma.dtos.requests.RegisterDriverRequest;
+import com.lastma.dtos.requests.RegisterOfficerRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,15 +22,25 @@ public class TicketServiceImplTest {
     @BeforeEach
     public void setup() {
         ticketService = new TicketServiceImpl();
+
         ticketRepository.deleteAll();
     }
 
     @Test
     public void testThatThatWhenIssueTicket_countIsOne(){
         assertEquals(0, ticketRepository.count());
-        int driverId = driverService.register("Full Name", "email@example.com","PhoneNumber","Password").getId();
+        RegisterDriverRequest driverRequest = new RegisterDriverRequest();
+        driverRequest.setFullName("Full Name");
+        driverRequest.setMail("email@example.com");
+        driverRequest.setPassword("password");
+        driverRequest.setPhoneNumber("123456789");
+        RegisterOfficerRequest officerRequest = new RegisterOfficerRequest();
+        officerRequest.setFullName("Full Name");
+        officerRequest.setOfficerNumber("001");
+        officerRequest.setPassword("password");
+        int driverId = driverService.register(driverRequest).getId();
         int offenceId = offenceService.createOffenceWith(ViolationType.BRT_LANE_VIOLATION,"001").getId();
-        int officerId = officerService.registerOfficer("Full Name","001","Passw0rd").getId();
+        int officerId = officerService.registerOfficer(officerRequest).getId();
         int vehicleId = vehicleService.register("Toyota","Camry","2025", VehicleType.CAR,driverId,"Plate Number").getId();
         ticketService.issueTicket("Ticket Number", vehicleId,offenceId,officerId,"Location", OffenderStatus.FIRST_TIME_OFFENDER);
         assertEquals(1, ticketRepository.count());

@@ -1,6 +1,6 @@
 package com.lastma.dtos.responses;
 
-public class OfficerServiceResponse {
+public class RegisterOfficerResponse {
     private String fullName;
     private String officerNumber;
     private int id;

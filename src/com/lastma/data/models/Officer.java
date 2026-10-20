@@ -4,7 +4,7 @@ public class Officer {
     private String fullName;
     private String officerNumber;
     private int id;
-    private boolean isActive;
+    private boolean isActive = true;
     private String password;
 
     public String getPassword() {return password;}

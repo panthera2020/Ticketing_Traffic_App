@@ -127,8 +127,8 @@ class TicketRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIncorrectId_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> ticketRepository.findById(-1));
+    public void testThatWhenIFindByIncorrectId_returnsNull() {
+        assertNull(ticketRepository.findById(-1));
     }
 
     @Test
@@ -144,17 +144,17 @@ class TicketRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIdOnEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> ticketRepository.findById(1));
+    public void testThatWhenIFindByIdOnEmptyRepository_returnsNull() {
+        assertNull(ticketRepository.findById(1));
     }
 
     @Test
-    public void testThatWhenIFindDeletedTicket_ErrorIsThrown() {
+    public void testThatWhenIFindDeletedTicket_returnsNull() {
         Ticket savedTicket = ticketRepository.save(ticket);
         int ticketId = savedTicket.getId();
         ticketRepository.delete(ticketId);
 
-        assertThrows(IllegalArgumentException.class, () -> ticketRepository.findById(ticketId));
+        assertNull(ticketRepository.findById(ticketId));
     }
 
     @Test
@@ -173,8 +173,8 @@ class TicketRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindAll_AndNoSavedTickets_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> ticketRepository.findAll());
+    public void testThatWhenIFindAll_AndNoSavedTickets_returnsNull() {
+        assertNull(ticketRepository.findAll());
     }
 
     @Test
@@ -191,11 +191,11 @@ class TicketRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIDeleteTheOnlyTicket_FindAllThrowsError() {
+    public void testThatWhenIDeleteTheOnlyTicket_FindAllReturnsNull() {
         Ticket savedTicket = ticketRepository.save(ticket);
         ticketRepository.delete(savedTicket.getId());
 
-        assertThrows(IllegalArgumentException.class, () -> ticketRepository.findAll());
+        assertNull(ticketRepository.findAll());
     }
 
     @Test
@@ -215,10 +215,6 @@ class TicketRepositoryImplTest {
         assertEquals(0L, ticketRepository.count());
     }
 
-    @Test
-    public void testThatWhenIDeleteTicketWithInvalidId_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> ticketRepository.delete(-1));
-    }
 
     @Test
     public void testThatWhenIDeleteOneTicket_OtherTicketsRemain() {
@@ -234,21 +230,6 @@ class TicketRepositoryImplTest {
         assertTrue(ticketRepository.existById(ticket.getId()));
         assertFalse(ticketRepository.existById(ticketTwo.getId()));
         assertTrue(ticketRepository.existById(ticketThree.getId()));
-    }
-
-    @Test
-    public void testThatWhenIDeleteSameTicketTwice_ErrorIsThrown() {
-        Ticket savedTicket = ticketRepository.save(ticket);
-        int ticketId = savedTicket.getId();
-        ticketRepository.delete(ticketId);
-
-        assertThrows(IllegalArgumentException.class, () -> ticketRepository.delete(ticketId));
-        assertEquals(0L, ticketRepository.count());
-    }
-
-    @Test
-    public void testThatWhenIDeleteFromEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> ticketRepository.delete(1));
     }
 
     @Test
@@ -269,7 +250,7 @@ class TicketRepositoryImplTest {
         ticketRepository.deleteAll();
 
         assertEquals(0L, ticketRepository.count());
-        assertThrows(IllegalArgumentException.class, () -> ticketRepository.findAll());
+        assertNull(ticketRepository.findAll());
     }
 
     @Test

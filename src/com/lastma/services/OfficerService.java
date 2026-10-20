@@ -1,16 +1,17 @@
 package com.lastma.services;
 
-import com.lastma.data.models.Officer;
-import com.lastma.dtos.responses.OfficerServiceResponse;
+import com.lastma.dtos.requests.RegisterDriverRequest;
+import com.lastma.dtos.requests.RegisterOfficerRequest;
+import com.lastma.dtos.responses.RegisterOfficerResponse;
 
 import java.util.List;
 
 public interface OfficerService {
-    OfficerServiceResponse registerOfficer(String fullName, String officerNumber, String password);
+    RegisterOfficerResponse registerOfficer(RegisterOfficerRequest request);
 
-    OfficerServiceResponse findOfficer(int officerId);
+    RegisterOfficerResponse findOfficer(int officerId);
 
-    List<OfficerServiceResponse> findAllOfficers();
+    List<RegisterOfficerResponse> findAllOfficers();
 
     void deactivate(int officerId);
 }

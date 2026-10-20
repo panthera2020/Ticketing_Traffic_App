@@ -32,7 +32,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
                 return payment;
             }
         }
-        throw new IllegalArgumentException("Payment with id " + id + " not found");
+        return null;
     }
 
     private void update(Payment payment) {
@@ -46,7 +46,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
 
     @Override
     public List<Payment> findAll() {
-        if (count() == 0) throw new IllegalArgumentException("No Payments saved");
+        if (count() == 0) return null;
         return payments;
     }
 

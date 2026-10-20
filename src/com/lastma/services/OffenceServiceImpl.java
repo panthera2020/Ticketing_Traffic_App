@@ -18,18 +18,23 @@ public class OffenceServiceImpl implements  OffenceService {
         validate(code);
         Offence offence = new Offence(violationType);
         offence.setCode(code);
+        offence.setDescription();
+        offence.setFirstOffenceFine();
+        offence.setSubsequentOffenceFine();
+        offence.setPenaltyPoints();
+        offence.setAdditionalPenaltyDescription();
         offence.activate();
-        offenceRepository.save(offence);
+        Offence savedOffence = offenceRepository.save(offence);
         OffenceServiceResponse response = new OffenceServiceResponse();
-        response.setId(offence.getId());
-        response.setCode(offence.getCode());
-        response.setDescription(offence.getDescription());
-        response.setActive(offence.isActive());
-        response.setViolationType(offence.getViolationType());
-        response.setAdditionalPenaltyDescription(offence.getAdditionalPenaltyDescription());
-        response.setFirstOffenceFine(offence.getFirstOffenceFine());
-        response.setSubsequentOffenceFine(offence.getSubsequentOffenceFine());
-        response.setPenaltyPoints(offence.getPenaltyPoints());
+        response.setId(savedOffence.getId());
+        response.setCode(savedOffence.getCode());
+        response.setDescription(savedOffence.getDescription());
+        response.setActive(savedOffence.isActive());
+        response.setViolationType(savedOffence.getViolationType());
+        response.setAdditionalPenaltyDescription(savedOffence.getAdditionalPenaltyDescription());
+        response.setFirstOffenceFine(savedOffence.getFirstOffenceFine());
+        response.setSubsequentOffenceFine(savedOffence.getSubsequentOffenceFine());
+        response.setPenaltyPoints(savedOffence.getPenaltyPoints());
         return response;
     }
 

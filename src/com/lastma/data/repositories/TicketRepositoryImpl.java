@@ -41,12 +41,12 @@ public class TicketRepositoryImpl implements TicketRepository {
                 return ticket;
             }
         }
-        throw new IllegalArgumentException("Ticket with id " + id + " not found");
+        return null;
     }
 
     @Override
     public List<Ticket> findAll() {
-        if (tickets.isEmpty()) throw new IllegalArgumentException("No Tickets saved");
+        if (tickets.isEmpty()) return null;
         return new ArrayList<>(tickets);
     }
 

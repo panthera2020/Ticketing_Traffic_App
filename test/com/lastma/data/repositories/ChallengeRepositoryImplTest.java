@@ -59,8 +59,8 @@ class ChallengeRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIncorrectId_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> challengeRepository.findById(-1));
+    public void testThatWhenIFindByIncorrectId_nullIsReturned() {
+        assertNull(challengeRepository.findById(-1));
     }
 
     @Test
@@ -80,8 +80,8 @@ class ChallengeRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindAll_AndNoSavedChallenges_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> challengeRepository.findAll());
+    public void testThatWhenIFindAll_AndNoSavedChallenges_nullIsReturned() {
+        assertNull(challengeRepository.findAll());
     }
 
     @Test
@@ -93,10 +93,6 @@ class ChallengeRepositoryImplTest {
         assertEquals(0L, challengeRepository.count());
     }
 
-    @Test
-    public void testThatWhenIDeleteChallengeWithInvalidId_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> challengeRepository.delete(-1));
-    }
 
     @Test
     public void testThatWhenIDeleteAllChallenges_AllChallengesAreDeleted() {
@@ -107,7 +103,7 @@ class ChallengeRepositoryImplTest {
         challengeRepository.save(challengeThree);
         challengeRepository.deleteAll();
         assertEquals(0L, challengeRepository.count());
-        assertThrows(IllegalArgumentException.class, () -> challengeRepository.findAll().size());
+        assertNull(challengeRepository.findAll());
     }
 
     @Test
@@ -204,17 +200,17 @@ class ChallengeRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIdOnEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> challengeRepository.findById(1));
+    public void testThatWhenIFindByIdOnEmptyRepository_nullIsReturned() {
+        assertNull(challengeRepository.findById(1));
     }
 
     @Test
-    public void testThatWhenIFindDeletedChallenge_ErrorIsThrown() {
+    public void testThatWhenIFindDeletedChallenge_nullIsReturned() {
         Challenge savedChallenge = challengeRepository.save(challenge);
         int challengeId = savedChallenge.getId();
         challengeRepository.delete(challengeId);
 
-        assertThrows(IllegalArgumentException.class, () -> challengeRepository.findById(challengeId));
+        assertNull( challengeRepository.findById(challengeId));
     }
 
     @Test
@@ -240,11 +236,11 @@ class ChallengeRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIDeleteTheOnlyChallenge_FindAllThrowsError() {
+    public void testThatWhenIDeleteTheOnlyChallenge_FindAllReturnsNull() {
         Challenge savedChallenge = challengeRepository.save(challenge);
         challengeRepository.delete(savedChallenge.getId());
 
-        assertThrows(IllegalArgumentException.class, () -> challengeRepository.findAll());
+        assertNull(challengeRepository.findAll());
     }
 
     @Test
@@ -261,21 +257,6 @@ class ChallengeRepositoryImplTest {
         assertTrue(challengeRepository.existById(challenge.getId()));
         assertFalse(challengeRepository.existById(challengeTwo.getId()));
         assertTrue(challengeRepository.existById(challengeThree.getId()));
-    }
-
-    @Test
-    public void testThatWhenIDeleteSameChallengeTwice_ErrorIsThrown() {
-        Challenge savedChallenge = challengeRepository.save(challenge);
-        int challengeId = savedChallenge.getId();
-        challengeRepository.delete(challengeId);
-
-        assertThrows(IllegalArgumentException.class, () -> challengeRepository.delete(challengeId));
-        assertEquals(0L, challengeRepository.count());
-    }
-
-    @Test
-    public void testThatWhenIDeleteFromEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> challengeRepository.delete(1));
     }
 
     @Test

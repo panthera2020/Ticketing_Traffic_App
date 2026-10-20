@@ -27,15 +27,15 @@ public class VehicleServiceImpl implements  VehicleService {
         newVehicle.setType(vehicleType);
         newVehicle.setDriverId(driverId);
         newVehicle.setPlateNumber(plateNumber);
-        vehicleRepository.save(newVehicle);
+        Vehicle savedVehicle = vehicleRepository.save(newVehicle);
         VehicleServiceResponse response = new VehicleServiceResponse();
-        response.setId(newVehicle.getId());
-        response.setMake(newVehicle.getMake());
-        response.setModel(newVehicle.getModel());
-        response.setYear(newVehicle.getYear());
-        response.setType(newVehicle.getType());
-        response.setDriverId(newVehicle.getDriverId());
-        response.setPlateNumber(newVehicle.getPlateNumber());
+        response.setId(savedVehicle.getId());
+        response.setMake(savedVehicle.getMake());
+        response.setModel(savedVehicle.getModel());
+        response.setYear(savedVehicle.getYear());
+        response.setType(savedVehicle.getType());
+        response.setDriverId(savedVehicle.getDriverId());
+        response.setPlateNumber(savedVehicle.getPlateNumber());
         return response;
     }
 

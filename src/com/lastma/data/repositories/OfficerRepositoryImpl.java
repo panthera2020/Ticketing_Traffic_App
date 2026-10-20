@@ -41,12 +41,12 @@ public class OfficerRepositoryImpl implements OfficerRepository {
                 return officer;
             }
         }
-        throw new IllegalArgumentException("Officer with id " + id + " not found");
+        return null;
     }
 
     @Override
     public List<Officer> findAll() {
-        if (officers.isEmpty()) throw new IllegalArgumentException("No Officers saved");
+        if (officers.isEmpty()) return null;
         return new ArrayList<>(officers);
     }
 

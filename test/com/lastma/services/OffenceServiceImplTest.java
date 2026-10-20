@@ -16,12 +16,14 @@ public class OffenceServiceImplTest {
     private OffenceService offenceService;
     private OffenceRepository offenceRepository = new OffenceRepositoryImpl();
     private int offenceId;
+    private OffenceServiceResponse createdOffence;
 
     @BeforeEach
     public void setup() {
         offenceService = new OffenceServiceImpl();
         offenceRepository.deleteAll();
-        offenceId = offenceService.createOffenceWith(ViolationType.BRT_LANE_VIOLATION, "004").getId();
+        createdOffence  = offenceService.createOffenceWith(ViolationType.BRT_LANE_VIOLATION, "004");
+        offenceId = createdOffence.getId();
     }
 
     @Test
@@ -30,6 +32,42 @@ public class OffenceServiceImplTest {
         assertEquals(0, offenceRepository.count());
         offenceService.createOffenceWith(ViolationType.ABANDONED_VEHICLE_ON_HIGHWAY, "001");
         assertEquals(1, offenceRepository.count());
+    }
+
+    @Test
+    public void testThatWhenOffenceIsCreated_codeIsSet() {
+        Offence foundOffenceInRepo = offenceRepository.findById(offenceId);
+        assertEquals(foundOffenceInRepo.getCode(), createdOffence.getCode());
+    }
+
+    @Test
+    public void testThatWhenOffenceIsCreated_descriptionIsSet() {
+        Offence foundOffenceInRepo = offenceRepository.findById(offenceId);
+        assertEquals(foundOffenceInRepo.getDescription(), createdOffence.getDescription());
+    }
+
+    @Test
+    public void testThatWhenOffenceIsCreated_firstOffenceFineIsSet() {
+        Offence foundOffenceInRepo = offenceRepository.findById(offenceId);
+        assertEquals(foundOffenceInRepo.getFirstOffenceFine(), createdOffence.getFirstOffenceFine());
+    }
+
+    @Test
+    public void testThatWhenOffenceIsCreated_subsequentOffenceFineIsSet() {
+        Offence foundOffenceInRepo = offenceRepository.findById(offenceId);
+        assertEquals(foundOffenceInRepo.getSubsequentOffenceFine(), createdOffence.getSubsequentOffenceFine());
+    }
+
+    @Test
+    public void testThatWhenOffenceIsCreated_penaltyPointsIsSet() {
+        Offence foundOffenceInRepo = offenceRepository.findById(offenceId);
+        assertEquals(foundOffenceInRepo.getPenaltyPoints(), createdOffence.getPenaltyPoints());
+    }
+
+    @Test
+    public void testThatWhenOffenceIsCreated_additionalDescriptionIsSet() {
+        Offence foundOffenceInRepo = offenceRepository.findById(offenceId);
+        assertEquals(foundOffenceInRepo.getAdditionalPenaltyDescription(), createdOffence.getAdditionalPenaltyDescription());
     }
 
     @Test

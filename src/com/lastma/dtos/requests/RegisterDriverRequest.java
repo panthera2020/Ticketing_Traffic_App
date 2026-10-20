@@ -1,17 +1,17 @@
-package com.lastma.dtos.responses;
+package com.lastma.dtos.requests;
 
-public class DriverServiceResponse {
+public class RegisterDriverRequest {
     private String fullName;
-    private String email;
-    private int id;
+    private String mail;
     private String phoneNumber;
+    private String password;
 
-    public String getEmail() {
-        return email;
+    public String getMail() {
+        return mail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public String getFullName() {
@@ -22,20 +22,20 @@ public class DriverServiceResponse {
         this.fullName = fullName;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 

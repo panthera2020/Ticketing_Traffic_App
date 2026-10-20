@@ -127,8 +127,8 @@ public class OfficerRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIncorrectId_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> officerRepository.findById(-1));
+    public void testThatWhenIFindByIncorrectId_returnsNull() {
+        assertNull(officerRepository.findById(-1));
     }
 
     @Test
@@ -144,17 +144,17 @@ public class OfficerRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIdOnEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> officerRepository.findById(1));
+    public void testThatWhenIFindByIdOnEmptyRepository_returnsNull() {
+        assertNull(officerRepository.findById(1));
     }
 
     @Test
-    public void testThatWhenIFindDeletedOfficer_ErrorIsThrown() {
+    public void testThatWhenIFindDeletedOfficer_returnsNull() {
         Officer savedOfficer = officerRepository.save(officer);
         int officerId = savedOfficer.getId();
         officerRepository.delete(officerId);
 
-        assertThrows(IllegalArgumentException.class, () -> officerRepository.findById(officerId));
+        assertNull( officerRepository.findById(officerId));
     }
 
     @Test
@@ -173,8 +173,8 @@ public class OfficerRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindAll_AndNoSavedOfficers_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> officerRepository.findAll());
+    public void testThatWhenIFindAll_AndNoSavedOfficers_returnsNull() {
+        assertNull(officerRepository.findAll());
     }
 
     @Test
@@ -191,11 +191,11 @@ public class OfficerRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIDeleteTheOnlyOfficer_FindAllThrowsError() {
+    public void testThatWhenIDeleteTheOnlyOfficer_FindAllReturnsNull() {
         Officer savedOfficer = officerRepository.save(officer);
         officerRepository.delete(savedOfficer.getId());
 
-        assertThrows(IllegalArgumentException.class, () -> officerRepository.findAll());
+        assertNull(officerRepository.findAll());
     }
 
     @Test
@@ -216,11 +216,6 @@ public class OfficerRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIDeleteOfficerWithInvalidId_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> officerRepository.delete(-1));
-    }
-
-    @Test
     public void testThatWhenIDeleteOneOfficer_OtherOfficersRemain() {
         Officer officerTwo = new Officer();
         Officer officerThree = new Officer();
@@ -234,21 +229,6 @@ public class OfficerRepositoryImplTest {
         assertTrue(officerRepository.existById(officer.getId()));
         assertFalse(officerRepository.existById(officerTwo.getId()));
         assertTrue(officerRepository.existById(officerThree.getId()));
-    }
-
-    @Test
-    public void testThatWhenIDeleteSameOfficerTwice_ErrorIsThrown() {
-        Officer savedOfficer = officerRepository.save(officer);
-        int officerId = savedOfficer.getId();
-        officerRepository.delete(officerId);
-
-        assertThrows(IllegalArgumentException.class, () -> officerRepository.delete(officerId));
-        assertEquals(0L, officerRepository.count());
-    }
-
-    @Test
-    public void testThatWhenIDeleteFromEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> officerRepository.delete(1));
     }
 
     @Test
@@ -269,7 +249,7 @@ public class OfficerRepositoryImplTest {
         officerRepository.deleteAll();
 
         assertEquals(0L, officerRepository.count());
-        assertThrows(IllegalArgumentException.class, () -> officerRepository.findAll());
+        assertNull(officerRepository.findAll());
     }
 
     @Test

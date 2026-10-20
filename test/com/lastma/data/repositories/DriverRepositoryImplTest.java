@@ -59,8 +59,8 @@ class DriverRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIncorrectId_ErrorIsThrown() {
-        assertThrows (IllegalArgumentException.class ,()-> driverRepository.findById(-1));
+    public void testThatWhenIFindByIncorrectId_returnsNull() {
+        assertNull (driverRepository.findById(-1));
     }
 
     @Test
@@ -80,8 +80,8 @@ class DriverRepositoryImplTest {
     }
 
     @Test
-    public void testThatWHenIFindAll_AndNoSavedDrivers_ErrorIsThrown() {
-        assertThrows (IllegalArgumentException.class ,()-> driverRepository.findAll());
+    public void testThatWHenIFindAll_AndNoSavedDrivers_returnsNull() {
+        assertNull(driverRepository.findAll());
     }
 
     @Test
@@ -94,11 +94,6 @@ class DriverRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIDeleteDriverWithInvalidId_ErrorIsThrown() {
-        assertThrows (IllegalArgumentException.class ,()-> driverRepository.delete(-1));
-    }
-
-    @Test
     public void testThatWhenIDeleteAllDrivers_AllDriversAreDeleted() {
         Driver driverTwo = new Driver();
         Driver driverThree = new Driver();
@@ -107,7 +102,7 @@ class DriverRepositoryImplTest {
         driverRepository.save(driverThree);
         driverRepository.deleteAll();
         assertEquals(0L, driverRepository.count());
-        assertThrows(IllegalArgumentException.class, ()-> driverRepository.findAll().size());
+        assertNull(driverRepository.findAll());
     }
 
     @Test
@@ -204,17 +199,17 @@ class DriverRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIdOnEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> driverRepository.findById(1));
+    public void testThatWhenIFindByIdOnEmptyRepository_returnsNull() {
+        assertNull(driverRepository.findById(1));
     }
 
     @Test
-    public void testThatWhenIFindDeletedDriver_ErrorIsThrown() {
+    public void testThatWhenIFindDeletedDriver_returnsNull() {
         Driver savedDriver = driverRepository.save(driver);
         int driverId = savedDriver.getId();
         driverRepository.delete(driverId);
 
-        assertThrows(IllegalArgumentException.class, () -> driverRepository.findById(driverId));
+        assertNull(driverRepository.findById(driverId));
     }
 
     @Test
@@ -240,11 +235,11 @@ class DriverRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIDeleteTheOnlyDriver_FindAllThrowsError() {
+    public void testThatWhenIDeleteTheOnlyDriver_FindAllReturnsNull() {
         Driver savedDriver = driverRepository.save(driver);
         driverRepository.delete(savedDriver.getId());
 
-        assertThrows(IllegalArgumentException.class, () -> driverRepository.findAll());
+        assertNull( driverRepository.findAll());
     }
 
     @Test
@@ -263,20 +258,6 @@ class DriverRepositoryImplTest {
         assertTrue(driverRepository.existById(driverThree.getId()));
     }
 
-    @Test
-    public void testThatWhenIDeleteSameDriverTwice_ErrorIsThrown() {
-        Driver savedDriver = driverRepository.save(driver);
-        int driverId = savedDriver.getId();
-        driverRepository.delete(driverId);
-
-        assertThrows(IllegalArgumentException.class, () -> driverRepository.delete(driverId));
-        assertEquals(0L, driverRepository.count());
-    }
-
-    @Test
-    public void testThatWhenIDeleteFromEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> driverRepository.delete(1));
-    }
 
     @Test
     public void testThatWhenIDeleteAllOnEmptyRepository_NoErrorIsThrown() {

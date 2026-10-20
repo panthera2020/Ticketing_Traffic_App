@@ -59,8 +59,8 @@ class OffenceRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIncorrectId_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> offenceRepository.findById(-1));
+    public void testThatWhenIFindByIncorrectId_returnsNull() {
+        assertNull(offenceRepository.findById(-1));
     }
 
     @Test
@@ -80,8 +80,8 @@ class OffenceRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindAll_AndNoSavedOffences_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> offenceRepository.findAll());
+    public void testThatWhenIFindAll_AndNoSavedOffences_returnsNull() {
+        assertNull(offenceRepository.findAll());
     }
 
     @Test
@@ -94,12 +94,7 @@ class OffenceRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIDeleteOffenceWithInvalidId_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> offenceRepository.delete(-1));
-    }
-
-    @Test
-    public void testThatWhenIDeleteAllOffences_AllOffencesAreDeleted() {
+    public void testThatWhenIDeleteAllOffences_AllOffencesReturnsNull() {
         Offence offenceTwo = new Offence();
         Offence offenceThree = new Offence();
         offenceRepository.save(offence);
@@ -107,7 +102,7 @@ class OffenceRepositoryImplTest {
         offenceRepository.save(offenceThree);
         offenceRepository.deleteAll();
         assertEquals(0L, offenceRepository.count());
-        assertThrows(IllegalArgumentException.class, () -> offenceRepository.findAll().size());
+        assertNull(offenceRepository.findAll());
     }
 
     @Test
@@ -204,17 +199,17 @@ class OffenceRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIdOnEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> offenceRepository.findById(1));
+    public void testThatWhenIFindByIdOnEmptyRepository_returnsNull() {
+        assertNull(offenceRepository.findById(1));
     }
 
     @Test
-    public void testThatWhenIFindDeletedOffence_ErrorIsThrown() {
+    public void testThatWhenIFindDeletedOffence_returnsNull() {
         Offence savedOffence = offenceRepository.save(offence);
         int offenceId = savedOffence.getId();
         offenceRepository.delete(offenceId);
 
-        assertThrows(IllegalArgumentException.class, () -> offenceRepository.findById(offenceId));
+        assertNull(offenceRepository.findById(offenceId));
     }
 
     @Test
@@ -240,11 +235,11 @@ class OffenceRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIDeleteTheOnlyOffence_FindAllThrowsError() {
+    public void testThatWhenIDeleteTheOnlyOffence_FindAllReturnsNull() {
         Offence savedOffence = offenceRepository.save(offence);
         offenceRepository.delete(savedOffence.getId());
 
-        assertThrows(IllegalArgumentException.class, () -> offenceRepository.findAll());
+        assertNull(offenceRepository.findAll());
     }
 
     @Test
@@ -261,21 +256,6 @@ class OffenceRepositoryImplTest {
         assertTrue(offenceRepository.existById(offence.getId()));
         assertFalse(offenceRepository.existById(offenceTwo.getId()));
         assertTrue(offenceRepository.existById(offenceThree.getId()));
-    }
-
-    @Test
-    public void testThatWhenIDeleteSameOffenceTwice_ErrorIsThrown() {
-        Offence savedOffence = offenceRepository.save(offence);
-        int offenceId = savedOffence.getId();
-        offenceRepository.delete(offenceId);
-
-        assertThrows(IllegalArgumentException.class, () -> offenceRepository.delete(offenceId));
-        assertEquals(0L, offenceRepository.count());
-    }
-
-    @Test
-    public void testThatWhenIDeleteFromEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> offenceRepository.delete(1));
     }
 
     @Test

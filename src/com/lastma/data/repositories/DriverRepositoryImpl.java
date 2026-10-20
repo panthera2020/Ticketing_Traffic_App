@@ -32,7 +32,7 @@ public class DriverRepositoryImpl implements DriverRepository {
                 return driver;
             }
         }
-        throw new IllegalArgumentException("Driver with id " + id + " not found");
+        return null;
     }
 
     private void update(Driver driver) {
@@ -46,7 +46,7 @@ public class DriverRepositoryImpl implements DriverRepository {
 
     @Override
     public List<Driver> findAll() {
-        if(count() == 0) throw new IllegalArgumentException("No Drivers saved");
+        if(count() == 0) return null;
         return drivers;
     }
 
@@ -54,7 +54,6 @@ public class DriverRepositoryImpl implements DriverRepository {
     public void delete(int id) {
         Driver foundDriver = findById(id);
         drivers.remove(foundDriver);
-//        numberOfDrivers--;
     }
 
     @Override

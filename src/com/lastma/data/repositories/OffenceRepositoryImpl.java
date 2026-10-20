@@ -32,7 +32,7 @@ public class OffenceRepositoryImpl implements OffenceRepository {
                 return offence;
             }
         }
-        throw new IllegalArgumentException("Offence with id " + id + " not found");
+        return null;
     }
 
     private void update(Offence offence) {
@@ -46,7 +46,7 @@ public class OffenceRepositoryImpl implements OffenceRepository {
 
     @Override
     public List<Offence> findAll() {
-        if (count() == 0) throw new IllegalArgumentException("No Offences saved");
+        if (count() == 0) return null;
         return offences;
     }
 

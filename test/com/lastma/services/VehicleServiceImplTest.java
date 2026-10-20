@@ -4,6 +4,7 @@ import com.lastma.data.models.Vehicle;
 import com.lastma.data.models.VehicleType;
 import com.lastma.data.repositories.VehicleRepository;
 import com.lastma.data.repositories.VehicleRepositoryImpl;
+import com.lastma.dtos.requests.RegisterDriverRequest;
 import com.lastma.dtos.responses.VehicleServiceResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,12 @@ class VehicleServiceImplTest {
         vehicleService = new VehicleServiceImpl();
         driverService = new DriverServiceImpl();
         vehicleRepository.deleteAll();
-        driverId = driverService.register("Fullname","email@example.com","phoneNumber","Password").getId();
+        RegisterDriverRequest request = new RegisterDriverRequest();
+        request.setFullName("Full Name");
+        request.setPassword("password");
+        request.setPhoneNumber("123456789");
+        request.setMail("email@example.com");
+        driverId = driverService.register(request).getId();
     }
 
     @Test

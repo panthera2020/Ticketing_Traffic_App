@@ -41,12 +41,12 @@ public class VehicleRepositoryImpl implements VehicleRepository {
                 return vehicle;
             }
         }
-        throw new IllegalArgumentException("Vehicle with id " + id + " not found");
+        return null;
     }
 
     @Override
     public List<Vehicle> findAll() {
-        if (vehicles.isEmpty()) throw new IllegalArgumentException("No Vehicles saved");
+        if (vehicles.isEmpty()) return null;
         return new ArrayList<>(vehicles);
     }
 

@@ -59,8 +59,8 @@ class PaymentRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIncorrectId_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> paymentRepository.findById(-1));
+    public void testThatWhenIFindByIncorrectId_returnsNull() {
+        assertNull(paymentRepository.findById(-1));
     }
 
     @Test
@@ -81,7 +81,7 @@ class PaymentRepositoryImplTest {
 
     @Test
     public void testThatWhenIFindAll_AndNoSavedPayments_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> paymentRepository.findAll());
+        assertNull(paymentRepository.findAll());
     }
 
     @Test
@@ -94,11 +94,6 @@ class PaymentRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIDeletePaymentWithInvalidId_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> paymentRepository.delete(-1));
-    }
-
-    @Test
     public void testThatWhenIDeleteAllPayments_AllPaymentsAreDeleted() {
         Payment paymentTwo = new Payment();
         Payment paymentThree = new Payment();
@@ -107,7 +102,7 @@ class PaymentRepositoryImplTest {
         paymentRepository.save(paymentThree);
         paymentRepository.deleteAll();
         assertEquals(0L, paymentRepository.count());
-        assertThrows(IllegalArgumentException.class, () -> paymentRepository.findAll().size());
+        assertNull(paymentRepository.findAll());
     }
 
     @Test
@@ -204,8 +199,8 @@ class PaymentRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIdOnEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> paymentRepository.findById(1));
+    public void testThatWhenIFindByIdOnEmptyRepository_returnsNull() {
+        assertNull(paymentRepository.findById(1));
     }
 
     @Test
@@ -214,7 +209,7 @@ class PaymentRepositoryImplTest {
         int paymentId = savedPayment.getId();
         paymentRepository.delete(paymentId);
 
-        assertThrows(IllegalArgumentException.class, () -> paymentRepository.findById(paymentId));
+        assertNull(paymentRepository.findById(paymentId));
     }
 
     @Test
@@ -244,7 +239,7 @@ class PaymentRepositoryImplTest {
         Payment savedPayment = paymentRepository.save(payment);
         paymentRepository.delete(savedPayment.getId());
 
-        assertThrows(IllegalArgumentException.class, () -> paymentRepository.findAll());
+        assertNull(paymentRepository.findAll());
     }
 
     @Test
@@ -261,21 +256,6 @@ class PaymentRepositoryImplTest {
         assertTrue(paymentRepository.existById(payment.getId()));
         assertFalse(paymentRepository.existById(paymentTwo.getId()));
         assertTrue(paymentRepository.existById(paymentThree.getId()));
-    }
-
-    @Test
-    public void testThatWhenIDeleteSamePaymentTwice_ErrorIsThrown() {
-        Payment savedPayment = paymentRepository.save(payment);
-        int paymentId = savedPayment.getId();
-        paymentRepository.delete(paymentId);
-
-        assertThrows(IllegalArgumentException.class, () -> paymentRepository.delete(paymentId));
-        assertEquals(0L, paymentRepository.count());
-    }
-
-    @Test
-    public void testThatWhenIDeleteFromEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> paymentRepository.delete(1));
     }
 
     @Test

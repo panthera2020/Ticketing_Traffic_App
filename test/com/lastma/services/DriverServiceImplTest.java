@@ -3,53 +3,77 @@ package com.lastma.services;
 import com.lastma.data.models.Driver;
 import com.lastma.data.repositories.DriverRepository;
 import com.lastma.data.repositories.DriverRepositoryImpl;
-import com.lastma.dtos.responses.DriverServiceResponse;
+import com.lastma.dtos.requests.FindDriverRequest;
+import com.lastma.dtos.requests.RegisterDriverRequest;
+import com.lastma.dtos.responses.FindAllDriverResponse;
+import com.lastma.dtos.responses.FindDriverResponse;
+import com.lastma.dtos.responses.RegisterDriverResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DriverServiceImplTest {
     private DriverService driverService;
     private DriverRepository driverRepository = new DriverRepositoryImpl();
+    private RegisterDriverRequest registerRequest;
+    private FindDriverRequest findRequest;
 
     @BeforeEach
     public void setup() {
         driverService = new DriverServiceImpl();
+        registerRequest = new RegisterDriverRequest();
+        registerRequest.setFullName("Full Name");
+        registerRequest.setMail("email@example.com");
+        registerRequest.setPhoneNumber("12345");
+        registerRequest.setPassword("password");
+        findRequest = new FindDriverRequest();
         driverRepository.deleteAll();
     }
 
     @Test
     public void testThatWhenIRegisterDriver_CountIsOne(){
         assertEquals(0,driverRepository.count());
-        driverService.register("Full Name","email@example.com", "PhoneNumber", "Password");
+        driverService.register(registerRequest);
         assertEquals(1,driverRepository.count());
     }
 
     @Test
     public void testThatWhenDriverIsRegistered_idIsGenerated(){
-        assertNotEquals(0,driverService.register("Full Name","email@example.com", "PhoneNumber", "Password"));
+        assertNotEquals(0,driverService.register(registerRequest));
     }
 
     @Test
     public void testThatWhenDriverIsRegistered_iCanFindDriverById(){
-        int driverId = driverService.register("Full Name","email@example.com", "PhoneNumber", "Password").getId();
+        int driverId = driverService.register(registerRequest).getId();
+
+        findRequest.setDriverId(driverId);
         Driver savedDriverInRepo = driverRepository.findById(driverId);
-        DriverServiceResponse savedDriverByService = driverService.findDriverBy(driverId);
+        FindDriverResponse savedDriverByService = driverService.findDriverBy(findRequest);
         assertEquals(savedDriverInRepo.getId(),savedDriverByService.getId());
     }
 
     @Test
     public void testThatWhenIFindDriverByInvalidId_ErrorIsThrown(){
-        assertThrows(IllegalArgumentException.class,() -> driverService.findDriverBy(-1));
+        findRequest.setDriverId(-1);
+        assertThrows(IllegalArgumentException.class,() -> driverService.findDriverBy(findRequest));
     }
 
     @Test
     public void testThatWhenIFindAllDrivers_iCanFindAllDrivers(){
-        driverService.register("Full Name","email@example.com", "PhoneNumber", "Password");
-        driverService.register("Full Name1","email@example.com1", "PhoneNumber1", "Password1");
-        driverService.register("Full Name2","email@example.com2", "PhoneNumber2", "Password2");
+        driverService.register(registerRequest);
+        driverService.register(registerRequest);
+        driverService.register(registerRequest);
         assertEquals(driverRepository.findAll().size(),driverService.findAllDriver().size());
+        List<FindAllDriverResponse> driversFromService = driverService.findAllDriver();
+        List<Driver> driversFromRepo = driverRepository.findAll();
+        for( int index = 0; index < driversFromRepo.size(); index++ ){
+            assertEquals(driversFromRepo.get(index).getId(),driversFromService.get(index).getId());
+            assertEquals(driversFromRepo.get(index).getFullName(),driversFromService.get(index).getFullName());
+            assertEquals(driversFromRepo.get(index).getPhoneNumber(),driversFromService.get(index).getPhoneNumber());
+        }
     }
 
 }

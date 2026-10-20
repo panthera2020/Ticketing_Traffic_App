@@ -32,7 +32,7 @@ public class ChallengeRepositoryImpl implements ChallengeRepository {
                 return challenge;
             }
         }
-        throw new IllegalArgumentException("Challenge with id " + id + " not found");
+        return null;
     }
 
     private void update(Challenge challenge) {
@@ -46,7 +46,7 @@ public class ChallengeRepositoryImpl implements ChallengeRepository {
 
     @Override
     public List<Challenge> findAll() {
-        if (count() == 0) throw new IllegalArgumentException("No Challenges saved");
+        if (count() == 0) return null;
         return challenges;
     }
 

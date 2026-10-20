@@ -126,8 +126,8 @@ class VehicleRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIncorrectId_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> vehicleRepository.findById(-1));
+    public void testThatWhenIFindByIncorrectId_returnsNull() {
+        assertNull(vehicleRepository.findById(-1));
     }
 
     @Test
@@ -143,17 +143,17 @@ class VehicleRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindByIdOnEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> vehicleRepository.findById(1));
+    public void testThatWhenIFindByIdOnEmptyRepository_returnsNull() {
+        assertNull(vehicleRepository.findById(1));
     }
 
     @Test
-    public void testThatWhenIFindDeletedVehicle_ErrorIsThrown() {
+    public void testThatWhenIFindDeletedVehicle_returnsNull() {
         Vehicle savedVehicle = vehicleRepository.save(vehicle);
         int vehicleId = savedVehicle.getId();
         vehicleRepository.delete(vehicleId);
 
-        assertThrows(IllegalArgumentException.class, () -> vehicleRepository.findById(vehicleId));
+        assertNull(vehicleRepository.findById(vehicleId));
     }
 
     @Test
@@ -172,8 +172,8 @@ class VehicleRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIFindAll_AndNoSavedVehicles_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> vehicleRepository.findAll());
+    public void testThatWhenIFindAll_AndNoSavedVehicles_returnsNull() {
+        assertNull( vehicleRepository.findAll());
     }
 
     @Test
@@ -190,11 +190,11 @@ class VehicleRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIDeleteTheOnlyVehicle_FindAllThrowsError() {
+    public void testThatWhenIDeleteTheOnlyVehicle_FindAllReturnsNull() {
         Vehicle savedVehicle = vehicleRepository.save(vehicle);
         vehicleRepository.delete(savedVehicle.getId());
 
-        assertThrows(IllegalArgumentException.class, () -> vehicleRepository.findAll());
+        assertNull(vehicleRepository.findAll());
     }
 
     @Test
@@ -215,11 +215,6 @@ class VehicleRepositoryImplTest {
     }
 
     @Test
-    public void testThatWhenIDeleteVehicleWithInvalidId_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> vehicleRepository.delete(-1));
-    }
-
-    @Test
     public void testThatWhenIDeleteOneVehicle_OtherVehiclesRemain() {
         Vehicle vehicleTwo = new Vehicle();
         Vehicle vehicleThree = new Vehicle();
@@ -235,20 +230,6 @@ class VehicleRepositoryImplTest {
         assertTrue(vehicleRepository.existById(vehicleThree.getId()));
     }
 
-    @Test
-    public void testThatWhenIDeleteSameVehicleTwice_ErrorIsThrown() {
-        Vehicle savedVehicle = vehicleRepository.save(vehicle);
-        int vehicleId = savedVehicle.getId();
-        vehicleRepository.delete(vehicleId);
-
-        assertThrows(IllegalArgumentException.class, () -> vehicleRepository.delete(vehicleId));
-        assertEquals(0L, vehicleRepository.count());
-    }
-
-    @Test
-    public void testThatWhenIDeleteFromEmptyRepository_ErrorIsThrown() {
-        assertThrows(IllegalArgumentException.class, () -> vehicleRepository.delete(1));
-    }
 
     @Test
     public void testThatWhenIDeleteVehicle_CountDecreasesByOne() {
@@ -268,7 +249,7 @@ class VehicleRepositoryImplTest {
         vehicleRepository.deleteAll();
 
         assertEquals(0L, vehicleRepository.count());
-        assertThrows(IllegalArgumentException.class, () -> vehicleRepository.findAll());
+        assertNull(vehicleRepository.findAll());
     }
 
     @Test
