@@ -4,7 +4,7 @@ import com.lastma.data.models.VehicleType;
 
 import java.time.Year;
 
-public class VehicleServiceResponse {
+public class RegisterVehicleResponse {
     private int id;
     private String make;
     private String model;

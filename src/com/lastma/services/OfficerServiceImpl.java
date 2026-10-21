@@ -3,56 +3,40 @@ package com.lastma.services;
 import com.lastma.data.models.Officer;
 import com.lastma.data.repositories.OfficerRepository;
 import com.lastma.data.repositories.OfficerRepositoryImpl;
-import com.lastma.dtos.requests.RegisterDriverRequest;
+import com.lastma.dtos.requests.FindOfficerRequest;
 import com.lastma.dtos.requests.RegisterOfficerRequest;
+import com.lastma.dtos.responses.FindAllOfficersResponse;
+import com.lastma.dtos.responses.FindOfficerResponse;
 import com.lastma.dtos.responses.RegisterOfficerResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.lastma.utils.OfficerServiceMapper.*;
 
 public class OfficerServiceImpl implements OfficerService {
     private OfficerRepository officerRepository = new OfficerRepositoryImpl();
 
     @Override
     public RegisterOfficerResponse registerOfficer(RegisterOfficerRequest request) {
-        Officer officer = new Officer();
-        officer.setFullName(request.getFullName());
-        officer.setOfficerNumber(request.getOfficerNumber());
-        officer.setPassword(request.getPassword());
-        Officer registeredOfficer = officerRepository.save(officer);
-        RegisterOfficerResponse response = new RegisterOfficerResponse();
-        response.setFullName(registeredOfficer.getFullName());
-        response.setOfficerNumber(registeredOfficer.getOfficerNumber());
-        response.setId(registeredOfficer.getId());
-        response.setActive(registeredOfficer.isActive());
-        return response;
+        Officer newOfficer = mapOfficer(request);
+        Officer officer = officerRepository.save(newOfficer);
+
+        return mapRegistered(officer);
     }
 
     @Override
-    public RegisterOfficerResponse findOfficer(int officerId) {
-        validate(officerId);
-        Officer foundOfficer = officerRepository.findById(officerId);
-        RegisterOfficerResponse response = new RegisterOfficerResponse();
-        response.setFullName(foundOfficer.getFullName());
-        response.setOfficerNumber(foundOfficer.getOfficerNumber());
-        response.setId(foundOfficer.getId());
-        response.setActive(foundOfficer.isActive());
-        return response;
+    public FindOfficerResponse findOfficer(FindOfficerRequest request) {
+        validate(request.getOfficerId());
+        Officer officer = officerRepository.findById(request.getOfficerId());
+        return mapFound(officer);
     }
 
     @Override
-    public List<RegisterOfficerResponse> findAllOfficers() {
+    public List<FindAllOfficersResponse> findAllOfficers() {
         List<Officer> foundOfficers = officerRepository.findAll();
-        List<RegisterOfficerResponse> responseList = new ArrayList<>();
-        for (Officer officer : foundOfficers) {
-            RegisterOfficerResponse response = new RegisterOfficerResponse();
-            response.setFullName(officer.getFullName());
-            response.setOfficerNumber(officer.getOfficerNumber());
-            response.setId(officer.getId());
-            response.setActive(officer.isActive());
-            responseList.add(response);
-        }
-        return responseList;
+
+        return mapListOf(foundOfficers);
     }
 
     @Override

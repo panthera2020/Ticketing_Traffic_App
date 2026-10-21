@@ -6,7 +6,7 @@ import com.lastma.data.repositories.DriverRepository;
 import com.lastma.data.repositories.DriverRepositoryImpl;
 import com.lastma.data.repositories.VehicleRepository;
 import com.lastma.data.repositories.VehicleRepositoryImpl;
-import com.lastma.dtos.responses.VehicleServiceResponse;
+import com.lastma.dtos.responses.RegisterVehicleResponse;
 
 import java.time.Year;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class VehicleServiceImpl implements  VehicleService {
     private DriverRepository driverRepository = new DriverRepositoryImpl();
 
     @Override
-    public VehicleServiceResponse register(String make, String model, String year, VehicleType vehicleType, int driverId, String plateNumber) {
+    public RegisterVehicleResponse register(String make, String model, String year, VehicleType vehicleType, int driverId, String plateNumber) {
         validate(driverId);
         validate(plateNumber);
         Vehicle newVehicle = new Vehicle();
@@ -28,7 +28,7 @@ public class VehicleServiceImpl implements  VehicleService {
         newVehicle.setDriverId(driverId);
         newVehicle.setPlateNumber(plateNumber);
         Vehicle savedVehicle = vehicleRepository.save(newVehicle);
-        VehicleServiceResponse response = new VehicleServiceResponse();
+        RegisterVehicleResponse response = new RegisterVehicleResponse();
         response.setId(savedVehicle.getId());
         response.setMake(savedVehicle.getMake());
         response.setModel(savedVehicle.getModel());
@@ -42,9 +42,9 @@ public class VehicleServiceImpl implements  VehicleService {
 
 
     @Override
-    public VehicleServiceResponse findVehicleBy(int vehicleId) {
+    public RegisterVehicleResponse findVehicleBy(int vehicleId) {
         Vehicle vehicleFound = vehicleRepository.findById(vehicleId);
-        VehicleServiceResponse response = new VehicleServiceResponse();
+        RegisterVehicleResponse response = new RegisterVehicleResponse();
         response.setId(vehicleFound.getId());
         response.setMake(vehicleFound.getMake());
         response.setModel(vehicleFound.getModel());
@@ -56,11 +56,11 @@ public class VehicleServiceImpl implements  VehicleService {
     }
 
     @Override
-    public VehicleServiceResponse findVehicleBy(String plateNumber) {
+    public RegisterVehicleResponse findVehicleBy(String plateNumber) {
         List<Vehicle> registeredVehicles = vehicleRepository.findAll();
         for (Vehicle vehicle : registeredVehicles) {
             if (vehicle.getPlateNumber().equals(plateNumber)) {
-                VehicleServiceResponse response = new VehicleServiceResponse();
+                RegisterVehicleResponse response = new RegisterVehicleResponse();
                 response.setId(vehicle.getId());
                 response.setMake(vehicle.getMake());
                 response.setModel(vehicle.getModel());
@@ -75,12 +75,12 @@ public class VehicleServiceImpl implements  VehicleService {
     }
 
     @Override
-    public List<VehicleServiceResponse> findAllVehiclesOwnedBy(int driverId) {
-        List<VehicleServiceResponse> ownedVehicles = new ArrayList<>();
+    public List<RegisterVehicleResponse> findAllVehiclesOwnedBy(int driverId) {
+        List<RegisterVehicleResponse> ownedVehicles = new ArrayList<>();
         List<Vehicle> registeredVehicles = vehicleRepository.findAll();
         for (Vehicle vehicle : registeredVehicles) {
             if (vehicle.getDriverId() == driverId) {
-                VehicleServiceResponse response = new VehicleServiceResponse();
+                RegisterVehicleResponse response = new RegisterVehicleResponse();
                 response.setId(vehicle.getId());
                 response.setMake(vehicle.getMake());
                 response.setModel(vehicle.getModel());

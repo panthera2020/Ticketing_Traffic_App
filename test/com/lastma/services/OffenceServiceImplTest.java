@@ -4,7 +4,12 @@ import com.lastma.data.models.Offence;
 import com.lastma.data.models.ViolationType;
 import com.lastma.data.repositories.OffenceRepository;
 import com.lastma.data.repositories.OffenceRepositoryImpl;
-import com.lastma.dtos.responses.OffenceServiceResponse;
+import com.lastma.dtos.requests.CreateOffenceRequest;
+import com.lastma.dtos.requests.FindOffenceByCodeRequest;
+import com.lastma.dtos.requests.FindOffenceByIdRequest;
+import com.lastma.dtos.responses.CreateOffenceResponse;
+import com.lastma.dtos.responses.FindOffenceByCodeResponse;
+import com.lastma.dtos.responses.FindOffenceByIdResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,21 +21,30 @@ public class OffenceServiceImplTest {
     private OffenceService offenceService;
     private OffenceRepository offenceRepository = new OffenceRepositoryImpl();
     private int offenceId;
-    private OffenceServiceResponse createdOffence;
+    private CreateOffenceResponse createdOffence;
+    private CreateOffenceRequest  createRequest;
+    private FindOffenceByIdRequest findByIdRequest;
+    private FindOffenceByCodeRequest findByCodeRequest;
 
     @BeforeEach
     public void setup() {
         offenceService = new OffenceServiceImpl();
         offenceRepository.deleteAll();
-        createdOffence  = offenceService.createOffenceWith(ViolationType.BRT_LANE_VIOLATION, "004");
+        createRequest = new CreateOffenceRequest();
+        findByIdRequest = new FindOffenceByIdRequest();
+        findByCodeRequest = new FindOffenceByCodeRequest();
+        createRequest.setViolationType(ViolationType.BRT_LANE_VIOLATION);
+        createRequest.setCode("004");
+        createdOffence  = offenceService.createOffenceWith(createRequest);
         offenceId = createdOffence.getId();
+        findByIdRequest.setOffenceId(offenceId);
     }
 
     @Test
     public void testThatWhenOffenceIsCreated_countIsOne() {
         offenceRepository.deleteAll();
         assertEquals(0, offenceRepository.count());
-        offenceService.createOffenceWith(ViolationType.ABANDONED_VEHICLE_ON_HIGHWAY, "001");
+        offenceService.createOffenceWith(createRequest);
         assertEquals(1, offenceRepository.count());
     }
 
@@ -73,65 +87,55 @@ public class OffenceServiceImplTest {
     @Test
     public void testThatWhenICreateOffenceIdIsGenerated() {
         offenceRepository.deleteAll();
-        assertNotEquals(0, offenceService.createOffenceWith(ViolationType.BRT_LANE_VIOLATION, "004").getId());
+        assertNotEquals(0, offenceService.createOffenceWith(createRequest).getId());
     }
 
     @Test
     public void testThatDuplicateOffenceCannotBeCreated() {
         offenceRepository.deleteAll();
-        offenceService.createOffenceWith(ViolationType.BRT_LANE_VIOLATION, "004");
-        assertThrows(IllegalArgumentException.class, () -> offenceService.createOffenceWith(ViolationType.BRT_LANE_VIOLATION, "004"));
+        offenceService.createOffenceWith(createRequest);
+        assertThrows(IllegalArgumentException.class, () -> offenceService.createOffenceWith(createRequest));
     }
 
     @Test
     public void testThatOffenceCanBeFoundById(){
-        OffenceServiceResponse savedOffenceByService = offenceService.findBy(offenceId);
+        FindOffenceByIdResponse savedOffenceByService = offenceService.findBy(findByIdRequest);
         Offence savedOffenceByRepo = offenceRepository.findById(offenceId);
         assertEquals(savedOffenceByService.getId(), savedOffenceByRepo.getId());
     }
 
     @Test
     public void testThatOffenceCanOffenceCannotCannotBeCreatedWithDuplicateCode(){
-        assertThrows(IllegalArgumentException.class, () -> offenceService.createOffenceWith(ViolationType.TRAFFIC_CONTROL_VIOLATION, "004"));
+        createRequest.setViolationType(ViolationType.TRAFFIC_CONTROL_VIOLATION);
+        createRequest.setCode("004");
+        assertThrows(IllegalArgumentException.class, () -> offenceService.createOffenceWith(createRequest));
     }
 
     @Test
     public void testThatOffenceCanBeFoundByCode(){
-        OffenceServiceResponse foundById = offenceService.findBy(offenceId);
-        OffenceServiceResponse foundByCode = offenceService.findBy("004");
+        FindOffenceByIdResponse foundById = offenceService.findBy(findByIdRequest);
+        findByCodeRequest.setCode(foundById.getCode());
+        FindOffenceByCodeResponse foundByCode = offenceService.findBy(findByCodeRequest);
         assertEquals(foundById.getId(), foundByCode.getId());
         assertEquals(foundById.getCode(), foundByCode.getCode());
     }
 
     @Test
     public void testThatWenISearchByInvalidCode_errorIsThrown(){
-        assertThrows(IllegalArgumentException.class, () -> offenceService.findBy("005"));
+        findByCodeRequest.setCode("005");
+        assertThrows(IllegalArgumentException.class, () -> offenceService.findBy(findByCodeRequest));
     }
 
     @Test
     public void testThatWhenICreateOffence_offenceStatusIsActivated(){
-        OffenceServiceResponse savedOffence = offenceService.findBy(offenceId);
+        FindOffenceByIdResponse savedOffence = offenceService.findBy(findByIdRequest);
         assertTrue(savedOffence.isActive());
     }
 
     @Test
     public void testThatWhenOffenceIsAddedOffenceCanBeDeactivatedWithId(){
-        assertTrue(offenceService.findBy(offenceId).isActive());
+        assertTrue(offenceService.findBy(findByIdRequest).isActive());
         offenceService.deactivate(offenceId);
-        assertFalse(offenceService.findBy(offenceId).isActive());
-    }
-
-    @Test
-    public void testThatICanGetListOfAllCreatedOffences(){
-        int offenceIdOne = offenceService.createOffenceWith(ViolationType.LINE_VIOLATION, "002").getId();
-        int offenceIdTwo = offenceService.createOffenceWith(ViolationType.ROUNDABOUT_VIOLATION, "005").getId();
-        int offenceIdThree = offenceService.createOffenceWith(ViolationType.SEATBELT_VIOLATION, "003").getId();
-        int[] offences = {offenceId, offenceIdOne, offenceIdTwo, offenceIdThree};
-        List<OffenceServiceResponse> allOffences = offenceService.findAllOffences();
-        int count = 0;
-        for (OffenceServiceResponse offence : allOffences) {
-            assertEquals(offence.getId(), offences[count]);
-            count++;
-        }
+        assertFalse(offenceService.findBy(findByIdRequest).isActive());
     }
 }

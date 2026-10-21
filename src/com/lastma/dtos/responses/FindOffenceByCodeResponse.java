@@ -2,7 +2,7 @@ package com.lastma.dtos.responses;
 
 import com.lastma.data.models.ViolationType;
 
-public class OffenceServiceResponse {
+public class FindOffenceByCodeResponse {
     private int id;
     private String code;
     private String description;
@@ -13,6 +13,13 @@ public class OffenceServiceResponse {
     private String additionalPenaltyDescription;
     private boolean active;
 
+    public ViolationType getViolationType() {
+        return violationType;
+    }
+
+    public void setViolationType(ViolationType violationType) {
+        this.violationType = violationType;
+    }
 
     public int getId() {
         return id;
@@ -52,14 +59,6 @@ public class OffenceServiceResponse {
 
     public void setFirstOffenceFine(int firstOffenceFine) {
         this.firstOffenceFine = firstOffenceFine;
-    }
-
-    public ViolationType getViolationType() {
-        return violationType;
-    }
-
-    public void setViolationType(ViolationType violationType) {
-        this.violationType = violationType;
     }
 
     public int getSubsequentOffenceFine() {

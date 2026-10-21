@@ -5,7 +5,7 @@ import com.lastma.data.models.VehicleType;
 import com.lastma.data.repositories.VehicleRepository;
 import com.lastma.data.repositories.VehicleRepositoryImpl;
 import com.lastma.dtos.requests.RegisterDriverRequest;
-import com.lastma.dtos.responses.VehicleServiceResponse;
+import com.lastma.dtos.responses.RegisterVehicleResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -63,7 +63,7 @@ class VehicleServiceImplTest {
     @Test
     public void testThatWhenVehicleIsRegistered_vehicleCanBeFoundById(){
         int vehicleId = vehicleService.register("make","model", "2020", VehicleType.SUV,driverId,"PLATENUMBER").getId();
-        VehicleServiceResponse savedVehicleByService = vehicleService.findVehicleBy(vehicleId);
+        RegisterVehicleResponse savedVehicleByService = vehicleService.findVehicleBy(vehicleId);
         Vehicle savedVehicleInRepo = vehicleRepository.findById(vehicleId);
         assertEquals(savedVehicleByService.getId(), savedVehicleInRepo.getId());
     }
@@ -76,7 +76,7 @@ class VehicleServiceImplTest {
     @Test
     public void testThatWhenRegisteredVehicleCanBeFoundByPlateNumber(){
         int vehicleId = vehicleService.register("make","model", "2020", VehicleType.SUV,driverId,"PLATENUMBER").getId();
-        VehicleServiceResponse savedVehicleByService = vehicleService.findVehicleBy("PLATENUMBER");
+        RegisterVehicleResponse savedVehicleByService = vehicleService.findVehicleBy("PLATENUMBER");
         Vehicle savedVehicleInRepo = vehicleRepository.findById(vehicleId);
         assertEquals(savedVehicleByService.getId(), savedVehicleInRepo.getId());
     }
@@ -87,9 +87,9 @@ class VehicleServiceImplTest {
         int vehicleIdTwo = vehicleService.register("make","model", "2015", VehicleType.CAR,driverId,"PLATENUMBER1").getId();
         int vehicleIdThree = vehicleService.register("make","model", "2026", VehicleType.TRUCK,driverId,"PLATENUMBER2").getId();
         int [] vehicleIds = {vehicleIdOne,vehicleIdTwo,vehicleIdThree};
-        List<VehicleServiceResponse> driversVehicles = vehicleService.findAllVehiclesOwnedBy(driverId);
+        List<RegisterVehicleResponse> driversVehicles = vehicleService.findAllVehiclesOwnedBy(driverId);
         int count = 0;
-        for(VehicleServiceResponse vehicle : driversVehicles){
+        for(RegisterVehicleResponse vehicle : driversVehicles){
             assertEquals(vehicle.getId(),vehicleIds[count]);
             count++;
         }
