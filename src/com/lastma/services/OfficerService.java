@@ -15,5 +15,6 @@ public interface OfficerService {
 
     List<FindAllOfficersResponse> findAllOfficers();
 
+    //Remember to change the deactivate request
     void deactivate(int officerId);
 }

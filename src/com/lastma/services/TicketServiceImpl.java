@@ -4,7 +4,6 @@ import com.lastma.data.models.Offence;
 import com.lastma.data.models.OffenderStatus;
 import com.lastma.data.models.Officer;
 import com.lastma.data.models.Ticket;
-import com.lastma.data.models.TicketStatus;
 import com.lastma.data.repositories.*;
 import com.lastma.dtos.requests.FindAllTicketsForVehicleRequest;
 import com.lastma.dtos.requests.FindTicketByIdRequest;
@@ -16,14 +15,12 @@ import com.lastma.dtos.responses.FindTicketByNumberResponse;
 import com.lastma.dtos.responses.TicketServiceResponse;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.lastma.utils.TicketServiceMapper.*;
 
 public class TicketServiceImpl implements TicketService {
-    private static final int PAYMENT_PERIOD_IN_DAYS = 30;
     private TicketRepository ticketRepository = new TicketRepositoryImpl();
     private VehicleRepository vehicleRepository = new VehicleRepositoryImpl();
     private OfficerRepository officerRepository = new OfficerRepositoryImpl();
