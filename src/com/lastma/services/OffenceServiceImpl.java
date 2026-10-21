@@ -29,23 +29,23 @@ public class OffenceServiceImpl implements  OffenceService {
     }
 
     @Override
-    public FindOffenceByIdResponse findBy(FindOffenceByIdRequest request) {
-        Offence foundOffence = offenceRepository.findById(request.getOffenceId());
+    public FindOffenceByIdResponse findBy(FindOffenceByIdRequest idRequest) {
+        Offence foundOffence = offenceRepository.findById(idRequest.getOffenceId());
 
         return mapId(foundOffence);
     }
 
     @Override
-    public FindOffenceByCodeResponse findBy(FindOffenceByCodeRequest request) {
+    public FindOffenceByCodeResponse findBy(FindOffenceByCodeRequest codeRequest) {
         if(offenceRepository.count() > 0){
             List<Offence> offences = offenceRepository.findAll();
             for(Offence foundOffence : offences){
-                if(foundOffence.getCode().equals(request.getCode())){
+                if(foundOffence.getCode().equals(codeRequest.getCode())){
                     return mapCode(foundOffence);
                 }
             }
         }
-        throw new IllegalArgumentException("Offence with code " + request.getCode() + " not found");
+        throw new IllegalArgumentException("Offence with code " + codeRequest.getCode() + " not found");
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.lastma.services;
 
-import com.lastma.data.models.VehicleType;
 import com.lastma.dtos.requests.FindAllVehicleOwnedByDriverRequest;
 import com.lastma.dtos.requests.FindVehicleByIdRequest;
 import com.lastma.dtos.requests.FindVehicleByPlateNumberRequest;
@@ -14,11 +13,11 @@ import java.util.List;
 
 
 public interface VehicleService {
-    RegisterVehicleResponse register(RegisterVehicleRequest request);
+    RegisterVehicleResponse registerVehicle(RegisterVehicleRequest request);
 
-    FindVehicleByIdResponse findVehicleBy(FindVehicleByIdRequest request);
+    FindVehicleByIdResponse findVehicleBy(FindVehicleByIdRequest idRequest);
 
-    FindVehicleByPlateNumberResponse findVehicleBy(FindVehicleByPlateNumberRequest request);
+    FindVehicleByPlateNumberResponse findVehicleBy(FindVehicleByPlateNumberRequest plateNumberRequest);
 
     List<FindAllVehicleOwnedByDriverResponse> findAllVehiclesOwnedBy(FindAllVehicleOwnedByDriverRequest request);
 }

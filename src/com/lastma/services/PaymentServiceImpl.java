@@ -20,7 +20,6 @@ import com.lastma.dtos.responses.FindPaymentByReferenceResponse;
 import com.lastma.dtos.responses.MakePaymentResponse;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,9 +47,9 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public FindPaymentByIdResponse findPaymentBy(FindPaymentByIdRequest request) {
-        validate(request.getPaymentId());
-        Payment foundPayment = paymentRepository.findById(request.getPaymentId());
+    public FindPaymentByIdResponse findPaymentBy(FindPaymentByIdRequest idRequest) {
+        validate(idRequest.getPaymentId());
+        Payment foundPayment = paymentRepository.findById(idRequest.getPaymentId());
 
         return mapId(foundPayment);
     }

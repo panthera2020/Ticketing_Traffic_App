@@ -1,5 +1,6 @@
 package com.lastma.controllers;
 
+import com.lastma.dtos.requests.FindOfficerRequest;
 import com.lastma.dtos.requests.RegisterOfficerRequest;
 import com.lastma.dtos.responses.ApiResponse;
 import com.lastma.services.OfficerService;
@@ -11,6 +12,24 @@ public class OfficerController {
     public ApiResponse registerOfficer(RegisterOfficerRequest request){
         try {
             return new ApiResponse(true, officerService.registerOfficer(request));
+        }
+        catch (Exception e){
+            return new ApiResponse(false, e.getMessage());
+        }
+    }
+
+    public ApiResponse findOfficer(FindOfficerRequest request){
+        try {
+            return new ApiResponse(true, officerService.findOfficer(request));
+        }
+        catch (Exception e){
+            return new ApiResponse(false, e.getMessage());
+        }
+    }
+
+    public ApiResponse findAllOfficers(){
+        try {
+            return new ApiResponse(true, officerService.findAllOfficers());
         }
         catch (Exception e){
             return new ApiResponse(false, e.getMessage());

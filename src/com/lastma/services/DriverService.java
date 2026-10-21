@@ -11,7 +11,7 @@ import java.util.List;
 public interface DriverService {
     RegisterDriverResponse registerDriver(RegisterDriverRequest request);
 
-    FindDriverResponse findDriverBy(FindDriverRequest request);
+    FindDriverResponse findDriverBy(FindDriverRequest idRequest);
 
     List<FindAllDriverResponse> findAllDriver();
 }

@@ -11,10 +11,10 @@ import java.util.List;
 public interface OfficerService {
     RegisterOfficerResponse registerOfficer(RegisterOfficerRequest request);
 
-    FindOfficerResponse findOfficer(FindOfficerRequest request);
+    FindOfficerResponse findOfficer(FindOfficerRequest idRequest);
 
     List<FindAllOfficersResponse> findAllOfficers();
 
-    //Remember to change the deactivate request
+    //Remember to change the deactivate request not implemented in controller yet
     void deactivate(int officerId);
 }

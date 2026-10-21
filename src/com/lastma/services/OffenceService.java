@@ -7,14 +7,13 @@ import com.lastma.dtos.responses.CreateOffenceResponse;
 import com.lastma.dtos.responses.FindOffenceByCodeResponse;
 import com.lastma.dtos.responses.FindOffenceByIdResponse;
 
-import java.util.List;
-
 public interface OffenceService {
     CreateOffenceResponse createOffenceWith(CreateOffenceRequest request);
 
-    FindOffenceByIdResponse findBy(FindOffenceByIdRequest request);
+    FindOffenceByIdResponse findBy(FindOffenceByIdRequest idRequest);
 
-    FindOffenceByCodeResponse findBy(FindOffenceByCodeRequest request);
+    FindOffenceByCodeResponse findBy(FindOffenceByCodeRequest codeRequest);
 
+    //Implement the deactive request response and add to controller
     void deactivate(int offenceId);
 }

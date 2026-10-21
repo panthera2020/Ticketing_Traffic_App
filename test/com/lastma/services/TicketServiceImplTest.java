@@ -70,7 +70,7 @@ public class TicketServiceImplTest {
         registerRequest.setDriverId(driverId);
         offenceId = offenceService.createOffenceWith(createRequest).getId();
         officerId = officerService.registerOfficer(officerRequest).getId();
-        vehicleId = vehicleService.register(registerRequest).getId();
+        vehicleId = vehicleService.registerVehicle(registerRequest).getId();
         issueRequest = new IssueTicketRequest();
         issueRequest.setTicketNumber("Ticket Number");
         issueRequest.setVehicleId(vehicleId);
@@ -310,7 +310,7 @@ public class TicketServiceImplTest {
         otherVehicleRequest.setYear("2022");
         otherVehicleRequest.setPlateNumber("Plate Number 2");
         otherVehicleRequest.setDriverId(driverId);
-        int otherVehicleId = vehicleService.register(otherVehicleRequest).getId();
+        int otherVehicleId = vehicleService.registerVehicle(otherVehicleRequest).getId();
         issueRequest.setTicketNumber("Ticket Number 2");
         issueRequest.setVehicleId(otherVehicleId);
         int otherTicketId = ticketService.issueTicket(issueRequest).getId();

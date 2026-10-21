@@ -43,9 +43,9 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public FindTicketByIdResponse findTicketBy(FindTicketByIdRequest request) {
-        validateTicket(request.getTicketId());
-        Ticket foundTicket = ticketRepository.findById(request.getTicketId());
+    public FindTicketByIdResponse findTicketBy(FindTicketByIdRequest idRequest) {
+        validateTicket(idRequest.getTicketId());
+        Ticket foundTicket = ticketRepository.findById(idRequest.getTicketId());
 
         return mapId(foundTicket);
     }

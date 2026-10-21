@@ -14,9 +14,9 @@ import java.util.List;
 public interface TicketService {
     TicketServiceResponse issueTicket(IssueTicketRequest request);
 
-    FindTicketByIdResponse findTicketBy(FindTicketByIdRequest request);
+    FindTicketByIdResponse findTicketBy(FindTicketByIdRequest idRequest);
 
-    FindTicketByNumberResponse findTicketBy(FindTicketByNumberRequest request);
+    FindTicketByNumberResponse findTicketBy(FindTicketByNumberRequest ticketNumberRequest);
 
-    List<FindAllTicketsForVehicleResponse> findAllTicketsFor(FindAllTicketsForVehicleRequest request);
+    List<FindAllTicketsForVehicleResponse> findAllTicketsFor(FindAllTicketsForVehicleRequest vehicleRequest);
 }

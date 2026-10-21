@@ -46,41 +46,41 @@ class VehicleServiceImplTest {
     @Test
     public void testThatWhenVehicleIsRegistered_countIsOne() {
         assertEquals(0, vehicleRepository.count());
-        vehicleService.register(vehicleRequest);
+        vehicleService.registerVehicle(vehicleRequest);
         assertEquals(1, vehicleRepository.count());
     }
 
     @Test
     public void testThatWhenVehicleIsRegisteredWithInvalidDriverId_errorIsThrown() {
         vehicleRequest.setDriverId(2);
-        assertThrows(IllegalArgumentException.class, () -> vehicleService.register(vehicleRequest));
+        assertThrows(IllegalArgumentException.class, () -> vehicleService.registerVehicle(vehicleRequest));
     }
 
     @Test
-    public void testThatOneDriverIdCanRegisterTwoVehicles() {
+    public void testThatOneDriverIdCanRegisterVehicleTwoVehicles() {
         assertEquals(0, vehicleRepository.count());
-        vehicleService.register(vehicleRequest);
+        vehicleService.registerVehicle(vehicleRequest);
         vehicleRequest.setVehicleType(VehicleType.CAR);
         vehicleRequest.setPlateNumber("PLATENUMBER1");
         vehicleRequest.setYear("2015");
-        vehicleService.register(vehicleRequest);
+        vehicleService.registerVehicle(vehicleRequest);
         vehicleRequest.setVehicleType(VehicleType.TRUCK);
         vehicleRequest.setPlateNumber("PLATENUMBER2");
         vehicleRequest.setYear("2026");
-        vehicleService.register(vehicleRequest);
+        vehicleService.registerVehicle(vehicleRequest);
         assertEquals(3, vehicleRepository.count());
     }
 
     @Test
     public void testThatVehiclesCanNotBeRegisteredWithTheSamePlateNumber(){
-        vehicleService.register(vehicleRequest);
+        vehicleService.registerVehicle(vehicleRequest);
         assertEquals(1, vehicleRepository.count());
-        assertThrows(IllegalArgumentException.class, () -> vehicleService.register(vehicleRequest));
+        assertThrows(IllegalArgumentException.class, () -> vehicleService.registerVehicle(vehicleRequest));
     }
 
     @Test
     public void testThatWhenVehicleIsRegistered_vehicleCanBeFoundById(){
-        int vehicleId = vehicleService.register(vehicleRequest).getId();
+        int vehicleId = vehicleService.registerVehicle(vehicleRequest).getId();
         FindVehicleByIdRequest vehicleIdRequest = new FindVehicleByIdRequest();
         vehicleIdRequest.setVehicleId(vehicleId);
         FindVehicleByIdResponse savedVehicleByService = vehicleService.findVehicleBy(vehicleIdRequest);
@@ -97,7 +97,7 @@ class VehicleServiceImplTest {
 
     @Test
     public void testThatWhenRegisteredVehicleCanBeFoundByPlateNumber(){
-        int vehicleId = vehicleService.register(vehicleRequest).getId();
+        int vehicleId = vehicleService.registerVehicle(vehicleRequest).getId();
         FindVehicleByPlateNumberRequest vehiclePlateNumberRequest = new FindVehicleByPlateNumberRequest();
         vehiclePlateNumberRequest.setPlateNumber("Plate Number");
         FindVehicleByPlateNumberResponse savedVehicleByService = vehicleService.findVehicleBy(vehiclePlateNumberRequest);
@@ -107,7 +107,7 @@ class VehicleServiceImplTest {
 
     @Test
     public void testThatWhenIFindVehicleByUnregisteredPLateNumber_errorIsThrown() {
-        vehicleService.register(vehicleRequest);
+        vehicleService.registerVehicle(vehicleRequest);
         FindVehicleByPlateNumberRequest vehiclePlateNumberRequest = new FindVehicleByPlateNumberRequest();
         vehiclePlateNumberRequest.setPlateNumber("Plate Number001");
         assertThrows(IllegalArgumentException.class, () -> vehicleService.findVehicleBy(vehiclePlateNumberRequest));
@@ -115,11 +115,11 @@ class VehicleServiceImplTest {
 
     @Test
     public void testThatICanGetListOfVehiclesOwnedByADriverWithId(){
-        int vehicleIdOne = vehicleService.register(vehicleRequest).getId();
+        int vehicleIdOne = vehicleService.registerVehicle(vehicleRequest).getId();
         vehicleRequest.setPlateNumber(vehicleIdOne + "1");
-        int vehicleIdTwo = vehicleService.register(vehicleRequest).getId();
+        int vehicleIdTwo = vehicleService.registerVehicle(vehicleRequest).getId();
         vehicleRequest.setPlateNumber(vehicleIdTwo + "2");
-        int vehicleIdThree = vehicleService.register(vehicleRequest).getId();
+        int vehicleIdThree = vehicleService.registerVehicle(vehicleRequest).getId();
         int [] vehicleIds = {vehicleIdOne,vehicleIdTwo,vehicleIdThree};
         FindAllVehicleOwnedByDriverRequest vehicleOwnedRequest = new FindAllVehicleOwnedByDriverRequest();
         vehicleOwnedRequest.setDriverId(driverId);

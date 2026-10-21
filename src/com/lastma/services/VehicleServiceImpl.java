@@ -15,7 +15,6 @@ import com.lastma.dtos.responses.FindVehicleByIdResponse;
 import com.lastma.dtos.responses.FindVehicleByPlateNumberResponse;
 import com.lastma.dtos.responses.RegisterVehicleResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.lastma.utils.VehicleServiceMapper.*;
@@ -25,7 +24,7 @@ public class VehicleServiceImpl implements  VehicleService {
     private DriverRepository driverRepository = new DriverRepositoryImpl();
 
     @Override
-    public RegisterVehicleResponse register(RegisterVehicleRequest request) {
+    public RegisterVehicleResponse registerVehicle(RegisterVehicleRequest request) {
         validate(request.getDriverId());
         validate(request.getPlateNumber());
         Vehicle newVehicle = map(request);
@@ -37,21 +36,21 @@ public class VehicleServiceImpl implements  VehicleService {
 
 
     @Override
-    public FindVehicleByIdResponse findVehicleBy(FindVehicleByIdRequest request) {
-        validate(request.getVehicleId());
-        Vehicle foundVehicle = vehicleRepository.findById(request.getVehicleId());
+    public FindVehicleByIdResponse findVehicleBy(FindVehicleByIdRequest idRequest) {
+        validate(idRequest.getVehicleId());
+        Vehicle foundVehicle = vehicleRepository.findById(idRequest.getVehicleId());
 
         return mapId(foundVehicle);
     }
 
     @Override
-    public FindVehicleByPlateNumberResponse findVehicleBy(FindVehicleByPlateNumberRequest request) {
+    public FindVehicleByPlateNumberResponse findVehicleBy(FindVehicleByPlateNumberRequest plateNumberRequest) {
         List<Vehicle> registeredVehicles = vehicleRepository.findAll();
         for (Vehicle foundVehicle : registeredVehicles) {
-            if (foundVehicle.getPlateNumber().equals(request.getPlateNumber()))  return mapPlateNumber(foundVehicle);
+            if (foundVehicle.getPlateNumber().equals(plateNumberRequest.getPlateNumber()))  return mapPlateNumber(foundVehicle);
 
         }
-        throw new IllegalArgumentException("Vehicle with" + request.getPlateNumber() + " doesn't exist");
+        throw new IllegalArgumentException("Vehicle with" + plateNumberRequest.getPlateNumber() + " doesn't exist");
     }
 
     @Override

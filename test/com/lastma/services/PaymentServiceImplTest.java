@@ -69,7 +69,7 @@ class PaymentServiceImplTest {
         vehicleRequest.setYear("2025");
         vehicleRequest.setPlateNumber("Plate Number");
         vehicleRequest.setDriverId(driverId);
-        int vehicleId = vehicleService.register(vehicleRequest).getId();
+        int vehicleId = vehicleService.registerVehicle(vehicleRequest).getId();
         RegisterOfficerRequest officerRequest = new RegisterOfficerRequest();
         officerRequest.setFullName("Full Name");
         officerRequest.setOfficerNumber("001");

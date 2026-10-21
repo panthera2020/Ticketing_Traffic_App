@@ -13,9 +13,9 @@ import java.util.List;
 public interface PaymentService {
     MakePaymentResponse makePayment(MakePaymentRequest request);
 
-    FindPaymentByIdResponse findPaymentBy(FindPaymentByIdRequest request);
+    FindPaymentByIdResponse findPaymentBy(FindPaymentByIdRequest idRequest);
 
-    FindPaymentByReferenceResponse findPaymentBy(FindPaymentByReferenceRequest request);
+    FindPaymentByReferenceResponse findPaymentBy(FindPaymentByReferenceRequest referenceRequest);
 
     List<FindAllPaymentsResponse> findAllPayments();
 }
