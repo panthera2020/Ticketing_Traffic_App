@@ -41,7 +41,7 @@ class DriverServiceImplTest {
 
     @Test
     public void testThatWhenDriverIsRegistered_idIsGenerated(){
-        assertNotEquals(0,driverService.registerDriver(registerRequest));
+        assertNotEquals(0,driverService.registerDriver(registerRequest).getId());
     }
 
     @Test
