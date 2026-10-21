@@ -1,17 +1,24 @@
 package com.lastma.services;
 
 import com.lastma.data.models.VehicleType;
+import com.lastma.dtos.requests.FindAllVehicleOwnedByDriverRequest;
+import com.lastma.dtos.requests.FindVehicleByIdRequest;
+import com.lastma.dtos.requests.FindVehicleByPlateNumberRequest;
+import com.lastma.dtos.requests.RegisterVehicleRequest;
+import com.lastma.dtos.responses.FindAllVehicleOwnedByDriverResponse;
+import com.lastma.dtos.responses.FindVehicleByIdResponse;
+import com.lastma.dtos.responses.FindVehicleByPlateNumberResponse;
 import com.lastma.dtos.responses.RegisterVehicleResponse;
 
 import java.util.List;
 
 
 public interface VehicleService {
-    RegisterVehicleResponse register(String make, String model, String year, VehicleType vehicleType, int driverId, String plateNumber);
+    RegisterVehicleResponse register(RegisterVehicleRequest request);
 
-    RegisterVehicleResponse findVehicleBy(int vehicleId);
+    FindVehicleByIdResponse findVehicleBy(FindVehicleByIdRequest request);
 
-    RegisterVehicleResponse findVehicleBy(String plateNumber);
+    FindVehicleByPlateNumberResponse findVehicleBy(FindVehicleByPlateNumberRequest request);
 
-    List<RegisterVehicleResponse> findAllVehiclesOwnedBy(int driverId);
+    List<FindAllVehicleOwnedByDriverResponse> findAllVehiclesOwnedBy(FindAllVehicleOwnedByDriverRequest request);
 }

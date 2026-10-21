@@ -7,6 +7,7 @@ import com.lastma.data.repositories.*;
 import com.lastma.dtos.requests.CreateOffenceRequest;
 import com.lastma.dtos.requests.RegisterDriverRequest;
 import com.lastma.dtos.requests.RegisterOfficerRequest;
+import com.lastma.dtos.requests.RegisterVehicleRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -42,10 +43,17 @@ public class TicketServiceImplTest {
         CreateOffenceRequest createRequest = new CreateOffenceRequest();
         createRequest.setViolationType(ViolationType.BRT_LANE_VIOLATION);
         createRequest.setCode("001");
+        RegisterVehicleRequest registerRequest = new RegisterVehicleRequest();
+        registerRequest.setVehicleType(VehicleType.CAR);
+        registerRequest.setMake("Toyota");
+        registerRequest.setModel("Camry");
+        registerRequest.setYear("2025");
+        registerRequest.setPlateNumber("Plate Number");
         int driverId = driverService.register(driverRequest).getId();
+        registerRequest.setDriverId(driverId);
         int offenceId = offenceService.createOffenceWith(createRequest).getId();
         int officerId = officerService.registerOfficer(officerRequest).getId();
-        int vehicleId = vehicleService.register("Toyota","Camry","2025", VehicleType.CAR,driverId,"Plate Number").getId();
+        int vehicleId = vehicleService.register(registerRequest).getId();
         ticketService.issueTicket("Ticket Number", vehicleId,offenceId,officerId,"Location", OffenderStatus.FIRST_TIME_OFFENDER);
         assertEquals(1, ticketRepository.count());
     }
