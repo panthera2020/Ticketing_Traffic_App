@@ -9,7 +9,7 @@ import com.lastma.dtos.responses.RegisterDriverResponse;
 import java.util.List;
 
 public interface DriverService {
-    RegisterDriverResponse register(RegisterDriverRequest request);
+    RegisterDriverResponse registerDriver(RegisterDriverRequest request);
 
     FindDriverResponse findDriverBy(FindDriverRequest request);
 

@@ -8,7 +8,6 @@ import com.lastma.dtos.requests.*;
 import com.lastma.dtos.responses.FindAllVehicleOwnedByDriverResponse;
 import com.lastma.dtos.responses.FindVehicleByIdResponse;
 import com.lastma.dtos.responses.FindVehicleByPlateNumberResponse;
-import com.lastma.dtos.responses.RegisterVehicleResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +34,7 @@ class VehicleServiceImplTest {
         driverRequest.setPhoneNumber("123456789");
         driverRequest.setMail("email@example.com");
         vehicleRequest = new RegisterVehicleRequest();
-        driverId = driverService.register(driverRequest).getId();
+        driverId = driverService.registerDriver(driverRequest).getId();
         vehicleRequest.setDriverId(driverId);
         vehicleRequest.setMake("Make Name");
         vehicleRequest.setModel("Model Name");

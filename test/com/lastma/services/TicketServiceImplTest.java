@@ -49,7 +49,7 @@ public class TicketServiceImplTest {
         registerRequest.setModel("Camry");
         registerRequest.setYear("2025");
         registerRequest.setPlateNumber("Plate Number");
-        int driverId = driverService.register(driverRequest).getId();
+        int driverId = driverService.registerDriver(driverRequest).getId();
         registerRequest.setDriverId(driverId);
         int offenceId = offenceService.createOffenceWith(createRequest).getId();
         int officerId = officerService.registerOfficer(officerRequest).getId();

@@ -17,7 +17,7 @@ public class DriverServiceImpl implements DriverService {
     private DriverRepository driverRepository = new DriverRepositoryImpl();
 
     @Override
-    public RegisterDriverResponse register(RegisterDriverRequest driverRequest) {
+    public RegisterDriverResponse registerDriver(RegisterDriverRequest driverRequest) {
         Driver newDriver = map(driverRequest);
         Driver driver = driverRepository.save(newDriver);
 

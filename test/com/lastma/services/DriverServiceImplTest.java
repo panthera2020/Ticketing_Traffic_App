@@ -7,7 +7,6 @@ import com.lastma.dtos.requests.FindDriverRequest;
 import com.lastma.dtos.requests.RegisterDriverRequest;
 import com.lastma.dtos.responses.FindAllDriverResponse;
 import com.lastma.dtos.responses.FindDriverResponse;
-import com.lastma.dtos.responses.RegisterDriverResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,18 +35,18 @@ class DriverServiceImplTest {
     @Test
     public void testThatWhenIRegisterDriver_CountIsOne(){
         assertEquals(0,driverRepository.count());
-        driverService.register(registerRequest);
+        driverService.registerDriver(registerRequest);
         assertEquals(1,driverRepository.count());
     }
 
     @Test
     public void testThatWhenDriverIsRegistered_idIsGenerated(){
-        assertNotEquals(0,driverService.register(registerRequest));
+        assertNotEquals(0,driverService.registerDriver(registerRequest));
     }
 
     @Test
     public void testThatWhenDriverIsRegistered_iCanFindDriverById(){
-        int driverId = driverService.register(registerRequest).getId();
+        int driverId = driverService.registerDriver(registerRequest).getId();
 
         findRequest.setDriverId(driverId);
         Driver savedDriverInRepo = driverRepository.findById(driverId);
@@ -63,9 +62,9 @@ class DriverServiceImplTest {
 
     @Test
     public void testThatWhenIFindAllDrivers_iCanFindAllDrivers(){
-        driverService.register(registerRequest);
-        driverService.register(registerRequest);
-        driverService.register(registerRequest);
+        driverService.registerDriver(registerRequest);
+        driverService.registerDriver(registerRequest);
+        driverService.registerDriver(registerRequest);
         assertEquals(driverRepository.findAll().size(),driverService.findAllDriver().size());
         List<FindAllDriverResponse> driversFromService = driverService.findAllDriver();
         List<Driver> driversFromRepo = driverRepository.findAll();
